@@ -1,8 +1,13 @@
 package com.example.mobile_development_2_2.data
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.room.*
 import java.time.LocalDateTime
+import java.util.*
 
 @Database(entities = [GoalDatabase.Win::class], version = 1)
 abstract class GoalDatabase : RoomDatabase() {
@@ -46,4 +51,17 @@ abstract class GoalDatabase : RoomDatabase() {
         @Query("SELECT COUNT(*) FROM Win")
         fun getTotalSize(): Int
     }
+
+
+}
+
+fun loadWinsFromDatabase(db: GoalDatabase, callback: (MutableList<GoalDatabase.Win>) -> Unit) {
+    Thread {
+        var wins = db.userDao().getAll().toMutableList()
+
+        Log.d("dbRequest", "Finished request")
+        Handler(Looper.getMainLooper()).post {
+            callback(wins)
+        }
+    }.start()
 }
