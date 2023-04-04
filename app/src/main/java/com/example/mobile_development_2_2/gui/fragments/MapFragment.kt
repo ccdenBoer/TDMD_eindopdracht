@@ -33,6 +33,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import com.example.mobile_development_2_2.R
+import com.example.mobile_development_2_2.data.GoalDatabase
 import com.example.mobile_development_2_2.data.GoalTimer
 import com.example.mobile_development_2_2.data.Lang
 import com.example.mobile_development_2_2.gui.GoalPoint
@@ -79,7 +80,7 @@ class MapFragment : LocationListener {
 
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
-    fun MapScreen(viewModel: OSMViewModel, modifier: Modifier, onPOIClicked: () -> Unit) {
+    fun MapScreen(viewModel: OSMViewModel, modifier: Modifier, onPOIClicked: () -> Unit, database: GoalDatabase) {
         context = LocalContext.current
         viewModel.provider.locationListener = this
         val mapView = remember {

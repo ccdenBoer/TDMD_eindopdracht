@@ -34,7 +34,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.example.mobile_development_2_2.R
+import com.example.mobile_development_2_2.data.GoalDatabase
 
 import com.example.mobile_development_2_2.data.Lang
 import com.example.mobile_development_2_2.data.PopupHelper
@@ -49,17 +51,13 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import org.osmdroid.config.Configuration.*
 
+
+
 class MainActivity : ComponentActivity() {
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
     lateinit var osmViewModel: OSMViewModel
     var map = MapFragment()
     private val TAG = "MainActivity"
-
-    private val isPipSupported by lazy {
-        packageManager.hasSystemFeature(
-            PackageManager.FEATURE_PICTURE_IN_PICTURE
-        )
-    }
 
     enum class Fragments(@StringRes val title: Int) {
         //Home(title = R.string.homeScreen),
@@ -79,7 +77,7 @@ class MainActivity : ComponentActivity() {
         Lang.onColorblindChange {  }
         Lang.loadSettings()
 
-        //RouteManager.getRouteManager(this)
+        val db = GoalDatabase.getInstance(this.baseContext)
 
 
         setContent {
@@ -96,30 +94,14 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    MainScreen(openDialog)
+                    MainScreen(openDialog, database = db)
 
 
                 }
             }
         }
     }
-    override fun onUserLeaveHint() {
-        if (!isPipSupported)
-            return
-        super.onUserLeaveHint()
-        enterPictureInPictureMode()
 
-    }
-    override fun onPictureInPictureModeChanged(
-        isInPictureInPictureMode: Boolean,
-        newConfig: Configuration
-    ) {
-        if(isInPictureInPictureMode) {
-            
-        } else {
-
-        }
-    }
 
 
 
@@ -155,7 +137,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainScreen(
         openDialog: MutableState<Boolean>,
-        navController: NavHostController = rememberNavController()
+        navController: NavHostController = rememberNavController(),
+        database: GoalDatabase
     ) {
         val premissions = rememberMultiplePermissionsState(
             listOf(
@@ -203,7 +186,8 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier,
                         onPOIClicked = {
                             Log.d(TAG, "poi clicked")
-                        }
+                        },
+                        database = database
                     )
 
 
