@@ -110,7 +110,7 @@ class MapFragment : LocationListener {
             OSM(
                 modifier = modifier,
                 provider = viewModel.provider,
-                routePoints = GoalPointManager.getGoalPointManager().getGoalsAsGeoPoint()
+                routePoints = GoalPointManager.getGoalPointManager(context).getGoalsAsGeoPoint()
                     .toMutableList(),
                 onPOIClicked = onPOIClicked
             )
@@ -153,7 +153,7 @@ class MapFragment : LocationListener {
                 }
             }
 
-            if (!GoalPointManager.getGoalPointManager().hasStarted()) {
+            if (!GoalPointManager.getGoalPointManager(null).hasStarted()) {
 
                 Row(
                     verticalAlignment = Alignment.Bottom,
@@ -162,7 +162,8 @@ class MapFragment : LocationListener {
                     Button(
                         onClick = {
 
-                            GoalPointManager.getGoalPointManager().start(myLocation);
+                            GoalPointManager.getGoalPointManager(null).start(myLocation);
+                            //currentRoute.setPoints(GoalPointManager.getGoalPointManager().getGoalsAsGeoPoint() .toMutableList())
                             GoalTimer.start()
                         },
                         modifier = Modifier
@@ -182,7 +183,7 @@ class MapFragment : LocationListener {
 
             }
         }
-        if (GoalPointManager.getGoalPointManager().hasStarted()) {
+        if (GoalPointManager.getGoalPointManager(null).hasStarted()) {
 
             Row(
                 verticalAlignment = Alignment.Top,
@@ -190,7 +191,7 @@ class MapFragment : LocationListener {
             ) {
                 Button(
                     onClick = {
-                        GoalPointManager.getGoalPointManager().stop()
+                        GoalPointManager.getGoalPointManager(null).stop();
                         GoalTimer.stop()
                     },
                     modifier = Modifier
@@ -259,7 +260,7 @@ class MapFragment : LocationListener {
         onPOIClicked: () -> Unit,
     ) {
 
-        val locations = GoalPointManager.getGoalPointManager().getGoals();
+        val locations = GoalPointManager.getGoalPointManager(null).getGoals();
         val listener = object : ItemizedIconOverlay.OnItemGestureListener<POIItem> {
             override fun onItemSingleTapUp(index: Int, item: POIItem?): Boolean {
 

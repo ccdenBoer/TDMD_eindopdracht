@@ -4,8 +4,7 @@ import org.osmdroid.util.GeoPoint
 
 data class GoalPoint(
     val location: GeoPoint,
-    var visited : Boolean = false,
-    var name: String = ""
-    ) {
+    var name: String = "",
+    var visited : Boolean = false) {
 
 }
