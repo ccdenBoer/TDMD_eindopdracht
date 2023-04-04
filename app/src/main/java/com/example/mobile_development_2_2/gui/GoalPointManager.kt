@@ -27,6 +27,8 @@ class GoalPointManager {
     }
 
     fun stop() {
+        geoPoints.clear()
+        goals.clear()
         started.value = false
     }
 
