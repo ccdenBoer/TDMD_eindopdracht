@@ -1,0 +1,243 @@
+<resources>
+    <string name="test">This is a test sting in DEFAULT LOCALE</string>
+    <string name="project_name" translatable="false">TDMD, Eidnopdracht</string>
+    <string name="home_welcome_to_chlam">Welcome to C.H.L.A.M</string>
+    <string name="poi_points_of_interest">Points of Interest</string>
+    <string name="routes_titles">Routes</string>
+    <string name="routes_points">Points</string>
+    <string name="routes_map">Map</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_colour_blind">Colorblind mode</string>
+    <string name="settings_copyright">Created by A4 in collaboration with A3</string>
+    <string name="messages_header">Messages</string>
+    <string name="signature_title" translatable="false">CHLAM</string>
+    <string name="reply_title">Reply</string>
+    <string name="sync_header">Sync</string>
+
+
+    <string name="homeScreen">Home</string>
+    <string name="infoScreen">Info</string>
+    <string name="poiListScreen">Points of Interest</string>
+    <string name="POIScreen">Point of Interest</string>
+    <string name="routeScreen">Route</string>
+    <string name="mapScreen">Map</string>
+    <string name="settingsScreen">Settings</string>
+    <string name="sync_title">Sync</string>
+    <string name="attachment_summary_off">Attachment off</string>
+    <string name="attachment_summary_on">Attachment on</string>
+    <string name="attachment_title">Attachments</string>
+    <string name="route_distance">Distance</string>
+    <string name="routes_waypoints">Waypoints</string>
+    <string name="map_no_location_permission">No location permissions</string>
+
+    <string name="notification">You have arrived at</string>
+    <string name="mapPopup">There is already progress with this route. Would you like to continue where you left off or reset your progress?</string>
+    <string name="confirm">Yes</string>
+    <string name="cancel">No</string>
+    <string name="popupcontinue">Continue</string>
+    <string name="popupreset">Reset</string>
+
+    <string name="HelpItem1">Select a route</string>
+    <string name="HelpItem1Description">Press the middle map button at the button of the screen to go to the available routes. There press the map button on the wanted route."</string>
+    <string name="HelpItem2">Walk a route</string>
+    <string name="HelpItem2Description">After selecting a route press the start route button to start walking the route.</string>
+    <string name="HelpItem3">Pause a route</string>
+    <string name="HelpItem3Description">When walking a route press the x button on the top left of the screen to stop progressing the  route.</string>
+    <string name="HelpItem4">View a POI</string>
+    <string name="HelpItem4Description">When walking a route you\'ll get a notification to view a POI when you\'re within 20 meters of it.</string>
+    <string name="HelpItem5">View a POI on the map</string>
+    <string name="HelpItem5Description">While on the map you can press the icons to view that POI</string>
+    <string name="HelpItem6">View all POIs</string>
+    <string name="HelpItem6Description">If you want to see all the POIs in your selected route go to the POI button at the bottom right of your screen.</string>
+    <string name="HelpItem7">Change language</string>
+    <string name="HelpItem7Description">To change the language go to settings at the top right of the screen.</string>
+    <string name="HelpItem8">Colorblind mode</string>
+    <string name="HelpItem8Description">To change colorblind mode go to settings at the top right of the screen and press the button next to colorblind.</string>
+    
+    //POI strings
+    <string name="poiNoDescription">no description available</string>
+    
+    <string name="poi1PlaceDescription">When you cross the bridge, you will see the Nassau-Baronie Monument on your left.</string>
+    <string name="poi1Description">At the entrance of the city park, the Valkenberg, there is a monument that tells you something about the development history of the city of Breda, but especially about the Lords of the city from the House of Nassau and the 500-year bond between Breda and the city. House of Nassau. On July 3, 1905, the Nassau-Baronie monument, as it is officially called, was unveiled by Queen Wilhelmina with much festive display. The statue recalls the fact that in 1404 Count Engelbert, the first Nassau from Breda, and his consort, Johanna van Polanen, were inaugurated as Lord and Lady of Breda. The designer is the well-known dr. P.J.H. Cuypers, who designed the Rijksmuseum and the Central Station in Amsterdam, among other things. This monument not only bears the coats of arms of twenty municipalities in and around the Baronie, but also the Lion of Nassau that towers above everything with the king\'s crown, sword and coat of arms. The three reliefs depict the \'joyful income\' of Count Engelbert and his wife. The burgesses offer the key to the city.</string>
+
+    <string name="poi2PlaceDescription">You immediately dive into the early history of Breda, if you take the path to the right over the bridge and walk further through the city park, the Valkenberg.</string>
+    <string name="poi2Description">Until 1812, this park served as a castle garden for the Lords of Breda. The park owes its name to a falcon house, which stood on its edge and from where the castle residents and their guests practiced falconry. The park was originally a real forest with tall trees. In the seventeenth century, that character disappeared with the construction of a French-style garden. One replica of the 17 statues is located further on in the park, in a specially constructed garden. This bed is a reminder of the French style garden. The original statue can be viewed in the Breda\'s Museum. In 1995 the Valkenberg was given a new look. Paths have been moved throughout the park, shrubs and bushes have been removed and new lighting has been installed. In addition, new benches have been placed in the park and play facilities have been made for the children. Excavations in the park have revealed the foundations of a medieval wall tower and of the stone wall that surrounded "little Breda" until 1537. A small piece has been built of two wall towers.</string>
+
+    <string name="poi3PlaceDescription">At the end of the park, walk past the gatehouse of the castle; on the left you look at the castle square.</string>
+    <string name="poi3Description">This square is located on the south side
+of the castle. You have such a beautiful
+view of the monumental gate, the
+so-called Stadholder\'s gate with the coat of arms
+of stadtholder William the Fifth, that
+incidentally, it was added later.
+Behind you will see the equestrian statue
+of Stadtholder King William III
+placed. For this statue
+among the bourgeoisie of Breda one
+collection held which f 47,000.00
+yielded. For the old Nassau city
+Breda is the stadtholder king of
+been of great significance. He completed
+after a century and a half of renovation
+of the Castle.
+
+Henry the Third of Nassau and his
+(drede) woman Mencia de Mendoza have changed a lot in Breda.
+stayed, but then preferably stayed in the rooms
+above the long ago demolished water mill on the
+grounds of the Castle.
+
+To the right of the gate is the so-called Blokhuis, the official
+residence of the governor of the KMA. William of Orange
+lived there in an adjoining room, but Prince Maurits
+preferred the water mill as a daily residence.
+Prince Philips Willem (1554-1618), the oldest and Roman Catholic
+son of William of Orange, who spent many years in Spanish exile
+lived and was buried in Diest, is the first Orange
+who also went to live in the Castle with his wife.
+
+He had the Valkenberg park beautified and the Castle really like
+furnish a palace. At his death in 1618 in Breda
+forty-two days in a row the church bells rang.
+In the place of the windows, to the left and right of the gate,
+were ornate in the sixteenth and seventeenth centuries
+open galleries. The mouse-grey building to the left of the castle gate
+was built in 1867. It is now also part of the
+KMA building complex.
+More history lies behind the white facade of the building
+
+</string>
+
+    <string name="poi4PlaceDescription">At the Vishal you enter the Vismarktstraat; this street leads to the Havermarkt.</string>
+    <string name="poi4Description">
+From the place where the fish market (1725) still indicates that a lively trade in sea fish used to be carried on here, we walk through the Vismarktstraat to the Havermarkt. This market has been Breda\'s entertainment center from the 1960s to the present day.
+Despite the name Havermarkt, it must be stated that the grains are not here; but were traded on the Grote Markt. Vegetables, eggs and butter were imported and sold here by farmers from the surrounding area. A leather market was also held here in the seventeenth century.
+The old names of this square were Groenmarkt, Botermarkt and Korenmarkt, which better indicates the former functions.
+
+This was built around 1490, as an extension of the Visserstraat. Anyone who grabs a beer on a terrace in the summer on this delightful square will soon discover (even without that beer) that this square offers the best view of the large tower of the Grote Kerk.
+From this place you can also admire the beautiful wide substructure of that tower.
+There is a lot to see in this square. On the left, on the corner of the Havermarkt and Reigerstraat, you will see the house \'De Arent\', built around 1490. It now has a seventeenth-century stepped gable and was completely restored in 1966 and converted into a restaurant.
+Opposite you on the Havermarkt are two more buildings that deserve your attention. Havermarkt number 5 dates from the sixteenth and seventeenth centuries. \'De Vogelstruys\' at Havermarkt 21 is a remarkable seventeenth century monument with a high, non-symmetrical stepped gable. This house has also had all kinds of functions and destinations over the centuries. It was, among other things, a refuge house for the sisters of Catharinadal in the seventeenth century.
+Four copies were made for the statue \'De Troubadour\', which adorns the end of the Havermarkt. The other three were unveiled in Diest, Orange and Dillenburg, the sister cities of Breda in the Union of Orange Cities, which was established in 1963.
+A little further in the Visserstraat (no. 31), on the right, is a beautiful brick house from the 17th century with remains of a sixteenth century Gothic house, called the Three Moors.
+
+</string>
+
+    <string name="poi5PlaceDescription">From the Havermarkt, go straight ahead into the Torenstraat. Immediately past the church, turn left onto Kerkplein.</string>
+    <string name="poi5Description">
+In 1969 the Torenfeesten were held in Breda to celebrate the conclusion of the restoration period of the Grote Toren, which took 25 years. All this time, the people of Breda, but not only them, have looked at a tower that hid its beauty behind a network of scaffolding.
+Also between 1995 and 1997, the beauty of the Grote or Onze Lieve Vrouwe Kerk was temporarily hidden behind scaffolding. In almost three years the church was once again restored inside.
+The restoration was divided into three phases. In the first phase, activities such as hosing clean the outside, repairing the pointing and the stained-glass windows and painting the inside were central. In the second phase, the underfloor heating was installed; In the third phase, the rest of the church was restored.
+Research has established that the construction of the church started in 1410. In the sixteenth century, the church was expanded on the south and north sides with a few chapels, the current vestry and the pastern entrance. The tower was completed in 1509; The first stone was laid in 1468, so that the construction period all together lasted forty years. The spire burned down in 1694. In the following years it was rebuilt, among other things with wood that was donated from his forests by Stadtholder King William III. In 1702 the rooster could be placed on it again. It is clear that the Lords of Breda, especially the Nassaufs, made an important contribution to the genesis of the Grote Kerk. Those Lords of Breda are also buried there; Their tombs are true art-historical showpieces. Prince William of Orange, who was murdered in Delft in 1584, had reserved a final resting place in the Grote Kerk under the beautiful funerary monument of Count Engelbert the Second, but his remains and those of the Princes of Orange who came after him were buried in Delft from then on. ordered.
+
+---
+
+Walk from Kerkplein back to Torenstraat and turn left. The first side street on your right is the Lange Brugstraat.
+
+On the corner of Torenstraat and Lange Brugstraat there is still a seventeenth century stepped gable from around 1600 and the signboard indicates the old name ft schaekbort (before 1727 eHet Dambordf) of this building. Take a look at the beautiful wall anchors.
+
+</string>
+
+    <string name="poi6PlaceDescription">Diagonally across the street on the Grote Markt you will find Breda\'s town hall and also the branch of the VVV.</string>
+    <string name="poi6Description">
+The main entrance of the stand house is located above the platform, which is guarded
+is supported by two sandstone lions. The Town Hall, as it appears today,
+was only established in 1767. It is actually four houses, which were then built by the
+master builder of Orange, Philips Willem Schonck, behind one facade
+hidden. The oldest part is the main hall. Already in the fifteenth century
+in addition, a so-called \'Cleyn raedthuys\' has also been taken into use. came in 1898
+the most right house, the \'Lying Deer\', which is still a separate one
+facade. has.
+
+Despite the fact that the town hall is only open to the public on a limited basis
+public, we would like to give you the following information about the inside of it anyway
+do not remember.
+Lady Justice above the main entrance and the wooden statue at the back of the hall
+indicate that justice was also administered in the town hall in the past.
+The counter of the former court, once standing against the back wall of the
+hall, is now kept in the Breda\'s Museum.
+On the left hangs a large copy of the famous painting by Velasques \'Las
+Lanzas", depicting the surrender of Breda to the Spanish commander Spinola (1625)
+portrays.
+The original painting hangs in the Prado in Madrid.
+The town hall is still used for public council meetings and for the
+concluding marriages. The mayor, aldermen and municipal officials
+houses since February 1992 in the new Municipal Offices on the Claudius
+Prinsenlaan in Breda. We walk through the gatehouse to the right of the town hall
+up the city yard. In the middle of this square, the statue De
+Peat skipper of Gerarda Rueb, to the legendary robbery in 1590 of
+Adriaan van Bergen with his Peat ship. (VVV Breda sells one of these
+replication).
+
+</string>
+
+    <string name="poi7PlaceDescription">Walk through the gate back to the Grote Markt and turn left. The second street on the left is the St. Janstraat. Enter here.</string>
+    <string name="poi7Description">
+On the corner of Halstraat / St. Janstraat we are standing in front of the building with the
+pillars: the garrison command. The building used to be called "main guard"
+called. Before that chief guard moved in there, St.
+Janskapel with behind it the buildings of the Order of Knights of St. Jan.
+The members of this order cared for the sick and the poor here.
+The street name reminds of these knights of St. Jan. in the chapel the
+great city fire of 1534.
+
+The St. Janstraat was once also called the Veterstraat, probably after
+the huydvetters or tanners, who work in the St. Janstraat
+exercised.
+On your right in the St. Janstraat is the Antonius van Paduakerk, a
+remarkably richly executed water state church. This church was built in 1836 as
+first catholic church after the clandestine church period, which was officially built
+could become. In 1853 it became the first bishop\'s church (cathedral) of the
+new diocese in Breda. The seat of the bishop of Breda turned after a
+absence of 32 years at the beginning of 2001 back to the Antonius Church
+which thus again acquired the status of a cathedral. Being on the frontage
+clearly see the three types of ancient columns. From the bottom to the top:
+Doric, Ionic and Corinthian columns. The statue above the entrance poses
+\'religion\' for. The beautiful wooden pulpit immediately stands out
+on. The life of Saint Anthony is depicted in various panels.
+A little further on are remnants or just memories of two
+very distinguished court houses, the House Ocrum, which until 1994 housed the Art Academy
+St. Joost was established and the Huis Hersbeeck, now rectory. In 1667
+the English envoys who took part in the
+Peace negotiations of Breda. The representatives of the Council of State
+used the building (no. 16) when they were in town on business,
+but King Lodewijk Napoleon also stayed there. The bay window of this building
+had a controlling function: the pastor could keep a close eye on who was there
+went to church.
+Huis Ocrum (no. 18) was a Roman orphanage from 1848 to 1952. You can
+you can still see the cobblestones on the 19th century facade of it
+academy building. The red color of this house (after the
+restoration applied) will have a beautiful gray-red color over the years
+color of this house (applied after the restoration) will continue through the course of the
+get a beautiful gray-red color for years.
+
+</string>
+
+    <string name="poi8PlaceDescription">At the end of St. Jansstraat, turn right into Molenstraat.</string>
+    <string name="poi8Description">
+In the Molenstraat you will see the Library, designed by an architect
+Herman Hertzberger. Because the Molenstraat is quite narrow, the architect
+space created by giving the library sloping walls. On the
+The place of the library (on the corner with the Oude Vest) used to be
+a gate. Above this gate was \'s Heeren Gevangenhuys, where
+the most severely punished were housed. The place is still with pebbles in it
+asphalt indicated; the asphalt road is the site of the old city moat.
+
+</string>
+
+    <string name="poi9PlaceDescription">Turn left on the corner of Molenstraat and Oude Vest.</string>
+    <string name="poi9Description">
+On this corner you will see a prominent monument from the
+history of Breda: the monastery barracks. It\'s part of the past
+sister monastery St. Catharinadal, which was located here since 1295. It
+current building dates from 1504. In 1645 the sisters became Norbertines
+expelled from Breda to Oosterhout.
+
+</string>
+    <string name="map_copyright" translatable="false">© OpenStreetMap</string>
+    <string name="map_start">Start</string>
+    <string name="map_continue">Continue</string>
+    <string name="map_recenter">Recenter</string>
+    <string name="map_points">points</string>
+</resources>

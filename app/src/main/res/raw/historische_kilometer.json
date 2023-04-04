@@ -1,0 +1,279 @@
+[
+  {
+    "name": "Historische Kilometer",
+    "cityName": "Breda",
+    "lenghth": 1,
+    "img": "ic_logo.png",
+    "shortDescription": "hallo",
+    "POIs": [
+      {
+        "name": "Stadhuis",
+        "location": {
+          "mLatitude": 51.5887,
+          "mLongitude": 4.7761
+        },
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.0
+      },
+      {
+        "name": "Antonius van Paduakerk",
+        "location": {
+          "mLatitude": 51.5876,
+          "mLongitude": 4.7772
+        },
+        "streetName": "",
+        "shortDescription": "poi7PlaceDescription",
+        "longDescription": "poi7Description",
+        "length": 0.19
+      },
+      {
+        "name": "Bibliotheek",
+        "location": {
+          "mLatitude": 51.588,
+          "mLongitude": 4.7789
+        },
+        "streetName": "",
+        "shortDescription": "poi8PlaceDescription",
+        "longDescription": "poi8Description",
+        "length": 0.17
+      },
+      {
+        "name": "Kloosterkazerne",
+        "location": {
+          "mLatitude": 51.5877,
+          "mLongitude": 4.781
+        },
+        "streetName": "",
+        "shortDescription": "poi9PlaceDescription",
+        "longDescription": "poi9Description",
+        "length": 0.85
+      },
+      {
+        "name": "Chasse theater",
+        "location": {
+          "mLatitude": 51.5877,
+          "mLongitude": 4.782
+        },
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.09
+      },
+      {
+        "name": "Binding van Isaac",
+        "location": {
+          "mLatitude": 51.5886,
+          "mLongitude": 4.7808
+        },
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.16
+      },
+      {
+        "name": "Beyerd",
+        "location": {
+          "mLatitude": 51.5896,
+          "mLongitude": 4.781
+        },
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.16
+      },
+      {
+        "name": "Gasthuispoort",
+        "location": {
+          "mLatitude": 51.5895,
+          "mLongitude": 4.78
+        },
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.06
+      },
+      {
+        "name": "Willem Merkxtuin",
+        "location": {
+          "mLatitude": 51.5891,
+          "mLongitude": 4.7779
+        },
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.22
+      },
+      {
+        "name": "Begijnenhof",
+        "location": {
+          "mLatitude": 51.5896,
+          "mLongitude": 4.7783
+        },
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.1
+      },
+      {
+        "name": "Nassau Baronie Monument",
+        "location": {
+          "mLatitude": 51.5925,
+          "mLongitude": 4.7796
+        },
+        "img": "poi4.jpg",
+        "streetName": "",
+        "shortDescription": "poi1PlaceDescription",
+        "longDescription": "poi1Description",
+        "length": 0.41
+      },
+      {
+        "name": "The Light House",
+        "location": {
+          "mLatitude": 51.5928,
+          "mLongitude": 4.7784
+        },
+        "img": "poi5.jpg",
+        "streetName": "",
+        "shortDescription": "poi2PlaceDescription",
+        "longDescription": "poi2Description",
+        "length": 0.08
+      },
+      {
+        "name": "Kasteel van Breda",
+        "location": {
+          "mLatitude": 51.5906,
+          "mLongitude": 4.7761
+        },
+        "img": "poi9.jpg",
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.34
+      },
+      {
+        "name": "Stadhouderspoort",
+        "location": {
+          "mLatitude": 51.5896,
+          "mLongitude": 4.7761
+        },
+        "img": "poi11.jpg",
+        "streetName": "",
+        "shortDescription": "poi5PlaceDescription",
+        "longDescription": "poi5Description",
+        "length": 0.15
+      },
+      {
+        "name": "Huis van Brecht",
+        "location": {
+          "mLatitude": 51.59,
+          "mLongitude": 4.7743
+        },
+        "img": "poi7.jpg",
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.21
+      },
+      {
+        "name": "Spanjaardsgat",
+        "location": {
+          "mLatitude": 51.5901,
+          "mLongitude": 4.7734
+        },
+        "img": "poi22.jpg",
+        "streetName": "",
+        "shortDescription": "poi3PlaceDescription",
+        "longDescription": "poi4PlaceDescription",
+        "length": 0.07
+      },
+      {
+        "name": "Vismarkt",
+        "location": {
+          "mLatitude": 51.5898,
+          "mLongitude": 4.7733
+        },
+        "img": "poi20.jpg",
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.05
+      },
+      {
+        "name": "Havermarkt",
+        "location": {
+          "mLatitude": 51.5893,
+          "mLongitude": 4.7744
+        },
+        "img": "poi19.jpg",
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.1
+      },
+      {
+        "name": "Grote Kerk",
+        "location": {
+          "mLatitude": 51.5888,
+          "mLongitude": 4.7752
+        },
+        "img": "poi10.jpg",
+        "streetName": "",
+        "shortDescription": "poi4PlaceDescription",
+        "longDescription": "poi4Description",
+        "length": 0.1
+      },
+      {
+        "name": "Het Poortje",
+        "location": {
+          "mLatitude": 51.5881,
+          "mLongitude": 4.7751
+        },
+        "img": "poi15.jpg",
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.13
+      },
+      {
+        "name": "Ridderstraat",
+        "location": {
+          "mLatitude": 51.587,
+          "mLongitude": 4.7757
+        },
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.15
+      },
+      {
+        "name": "Grote Markt",
+        "location": {
+          "mLatitude": 51.5874,
+          "mLongitude": 4.7765
+        },
+        "img": "poi17.jpg",
+        "streetName": "",
+        "shortDescription": "poi6PlaceDescription",
+        "longDescription": "poi6PlaceDescription",
+        "length": 0.06
+      },
+      {
+        "name": "Bevrijdingsmonument",
+        "location": {
+          "mLatitude": 51.588,
+          "mLongitude": 4.7763
+        },
+        "img": "poi24.jpg",
+        "streetName": "",
+        "shortDescription": "poiNoDescription",
+        "longDescription": "poiNoDescription",
+        "length": 0.06
+      }
+    ]
+  }
+]
+
+
+
