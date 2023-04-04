@@ -23,26 +23,10 @@
     <string name="mapScreen">Kaart</string>
     <string name="POIScreen">Trekpleister</string>
     <string name="poiListScreen">Trekpleisters</string>
-    <string name="settingsScreen">Instellingen</string>
+    <string name="historyScreen">Geschiedenis</string>
     <string name="route_distance">Afstand</string>
     <string name="routes_waypoints">Punten</string>
     <string name="map_no_location_permission">Geen toegang tot locatie</string>
-    <string name="HelpItem1">Route selecteren</string>
-    <string name="HelpItem1Description">Klik op de middelste knop onderaan het scherm en selecteer een route door op kaart te drukken."</string>
-    <string name="HelpItem2">Route lopen</string>
-    <string name="HelpItem2Description">Druk op de start route knop als je binnen op het kaart scherm ben.</string>
-    <string name="HelpItem3">Route pauzeren</string>
-    <string name="HelpItem3Description">Als je een route heb gestart, druk op het kruisje links boven het scherm.</string>
-    <string name="HelpItem4">POI bekijken</string>
-    <string name="HelpItem4Description">Als je een route aan het lopen krijg je binnen 20 meter van een trekpluisten een notificatie om de trekpluister te bekijken.</string>
-    <string name="HelpItem5">POI op kaart bekijken</string>
-    <string name="HelpItem5Description">Als je de kaart aan het bekijken ben kan je op een puntje klikken om de trekplijster te bekijken.</string>
-    <string name="HelpItem6">Alle POIs bekijken</string>
-    <string name="HelpItem6Description">Als je een lijst met trekplijsters wilt zien, kunt u naar de POI pagina recht onder het scherm. Dit laat de trekplijsters zien van je geselecteerde route.</string>
-    <string name="HelpItem7">Taal veranderen</string>
-    <string name="HelpItem7Description">Om de taal te verranderen kan u naar de instellingen rechts boven. Daar kan u klikken op een taal om het te verranderen.</string>
-    <string name="HelpItem8">Kleurenblinde modus</string>
-    <string name="HelpItem8Description">Als u moeite heeft met kleuren kunt u naar instellingen recht boven. Daar kunt u op het knopje naast kleurenblinde modus klikken om de app zwart-wit te maken.</string>
 
     <string name="notification">Gearriveerd bij</string>
     <string name="mapPopup">U heeft al progressie bij deze routen. Wilt u verder gaan of de route resetten?</string>

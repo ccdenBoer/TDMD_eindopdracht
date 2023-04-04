@@ -22,7 +22,7 @@
     <string name="POIScreen">Point of Interest</string>
     <string name="routeScreen">Route</string>
     <string name="mapScreen">Map</string>
-    <string name="settingsScreen">Settings</string>
+    <string name="historyScreen">History</string>
     <string name="sync_title">Sync</string>
     <string name="attachment_summary_off">Attachment off</string>
     <string name="attachment_summary_on">Attachment on</string>
@@ -38,22 +38,6 @@
     <string name="popupcontinue">Continue</string>
     <string name="popupreset">Reset</string>
 
-    <string name="HelpItem1">Select a route</string>
-    <string name="HelpItem1Description">Press the middle map button at the button of the screen to go to the available routes. There press the map button on the wanted route."</string>
-    <string name="HelpItem2">Walk a route</string>
-    <string name="HelpItem2Description">After selecting a route press the start route button to start walking the route.</string>
-    <string name="HelpItem3">Pause a route</string>
-    <string name="HelpItem3Description">When walking a route press the x button on the top left of the screen to stop progressing the  route.</string>
-    <string name="HelpItem4">View a POI</string>
-    <string name="HelpItem4Description">When walking a route you\'ll get a notification to view a POI when you\'re within 20 meters of it.</string>
-    <string name="HelpItem5">View a POI on the map</string>
-    <string name="HelpItem5Description">While on the map you can press the icons to view that POI</string>
-    <string name="HelpItem6">View all POIs</string>
-    <string name="HelpItem6Description">If you want to see all the POIs in your selected route go to the POI button at the bottom right of your screen.</string>
-    <string name="HelpItem7">Change language</string>
-    <string name="HelpItem7Description">To change the language go to settings at the top right of the screen.</string>
-    <string name="HelpItem8">Colorblind mode</string>
-    <string name="HelpItem8Description">To change colorblind mode go to settings at the top right of the screen and press the button next to colorblind.</string>
 
     <string name="map_copyright" translatable="false">© OpenStreetMap</string>
     <string name="map_start">Start</string>

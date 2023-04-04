@@ -42,7 +42,7 @@ abstract class GoalDatabase : RoomDatabase() {
 
         @Delete
         fun delete(win: Win)
-        
+
         @Query("SELECT COUNT(*) FROM Win")
         fun getTotalSize(): Int
     }

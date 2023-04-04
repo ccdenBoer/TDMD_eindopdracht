@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
         //POI(title = R.string.POIScreen),
         //Route(title = R.string.routeScreen),
         Map(title = R.string.mapScreen),
-        Settings(title = R.string.settingsScreen),
+        History(title = R.string.historyScreen),
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -167,7 +167,7 @@ class MainActivity : ComponentActivity() {
                     currentScreen = currentScreen,
                     canNavigateBack = navController.previousBackStackEntry != null,
                     navigateUp = { navController.navigateUp() },
-                    onSettingsButtonClicked = { navController.navigate(Fragments.Settings.name) })
+                    onSettingsButtonClicked = { navController.navigate(Fragments.History.name) })
             },
             backgroundColor = MaterialTheme.colors.background,
             contentColor = MaterialTheme.colors.background
@@ -192,10 +192,10 @@ class MainActivity : ComponentActivity() {
 
 
                 }
-                composable(route = Fragments.Settings.name) {
+                composable(route = Fragments.History.name) {
                     SettingsFragment(
-//                        viewModel = osmViewModel,
-                        modifier = Modifier
+                        modifier = Modifier,
+                        database = database
                     )
                 }
             }
@@ -233,7 +233,7 @@ class MainActivity : ComponentActivity() {
             backgroundColor = MaterialTheme.colors.primary,
             contentColor = MaterialTheme.colors.onPrimary,
             actions = {
-                if (currentScreen.name != Fragments.Settings.name) {
+                if (currentScreen.name != Fragments.History.name) {
                     IconButton(onClick = { onSettingsButtonClicked() }) {
                         Icon(painterResource(id = item.icon), contentDescription = item.title)
                     }
