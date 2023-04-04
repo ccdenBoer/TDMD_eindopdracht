@@ -24,10 +24,10 @@ class GeofenceHelper(base: Context?) : ContextWrapper(base) {
             .build()
     }
 
-    fun getGeofence(lat : Double, lng : Double) : Geofence? {
+    fun getGeofence(lat : Double, lng : Double, id : String) : Geofence? {
         Log.d(TAG, "giving geofence")
         return Geofence.Builder()
-            .setRequestId("geo")
+            .setRequestId(id)
             .setCircularRegion(lat, lng, 20f)
             .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
             .setExpirationDuration(Geofence.NEVER_EXPIRE)

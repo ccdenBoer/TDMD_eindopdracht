@@ -1,8 +1,17 @@
 package com.example.mobile_development_2_2.gui
 
+import android.app.PendingIntent
+import android.content.ContentValues
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.PackageManagerCompat.LOG_TAG
+import com.example.mobile_development_2_2.data.GeofenceHelper
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.GeofencingRequest
+import com.google.android.gms.location.LocationServices
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
@@ -12,8 +21,11 @@ class GoalPointManager {
     //private var goals: List<GoalPoint>? = null
     private val geoPoints = mutableListOf<GeoPoint>()
     private val goals = mutableListOf<GoalPoint>()
+    var context: Context?
 
-    private constructor(){
+    private constructor(context: Context?) {
+        Log.d(LOG_TAG, "constructor")
+        this.context = context
     }
 
     fun hasStarted(): Boolean {
@@ -73,18 +85,52 @@ class GoalPointManager {
 
         goals.forEach { i ->
             geoPoints.add(i.location)
+            addGeofenceLocation(i.location.latitude, i.location.longitude, i.name)
         }
 
 
         return goals
     }
 
+    fun addGeofenceLocation(lat: Double, lng: Double, id: String) {
+        Log.d(LOG_TAG, "Setting geofence $lat $lng $id")
+        var geofence: Geofence? = geofenceHelper?.getGeofence(lat, lng, id)
+
+        var geofencingRequest: GeofencingRequest? = geofence?.let {
+            geofenceHelper?.geofencingRequest(
+                it
+            )
+        }
+        var pendingIntent: PendingIntent? = geofenceHelper?.getPendingIntent()
+        if (geofencingRequest != null) {
+            if (pendingIntent != null) {
+                geofencingClient?.addGeofences(geofencingRequest, pendingIntent)
+                    ?.addOnSuccessListener {
+                        Log.d(
+                            LOG_TAG,
+                            "Geofence added " + geofencingRequest.geofences[0].latitude + " " + geofencingRequest.geofences[0].longitude
+                        )
+                    }
+                    ?.addOnFailureListener { e ->
+                        Log.d(
+                            ContentValues.TAG,
+                            "onFailure: " + geofenceHelper?.getErrorString(e)
+                        )
+                    }
+            }
+        }
+    }
     companion object {
+        private var geofencingClient: GeofencingClient? = null
+        private var geofenceHelper: GeofenceHelper? = null
         private var goalPointManager: GoalPointManager? = null
 
-        fun getGoalPointManager(): GoalPointManager {
+        fun getGoalPointManager(context: Context?): GoalPointManager {
             if (goalPointManager == null) {
-                goalPointManager = GoalPointManager()
+                Log.d("RouteManager", "making goalpointmanager")
+                geofenceHelper = GeofenceHelper(context)
+                geofencingClient = context?.let { LocationServices.getGeofencingClient(it) }
+                goalPointManager = GoalPointManager(context)
             }
 
             return goalPointManager as GoalPointManager
