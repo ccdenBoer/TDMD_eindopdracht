@@ -9,9 +9,11 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 class GoalPointManager {
     var finished: MutableState<Boolean> = mutableStateOf(false)
     var started: MutableState<Boolean> = mutableStateOf(false)
+    var goalsVisited: MutableState<Int> = mutableStateOf(0)
     //private var goals: List<GoalPoint>? = null
     private val geoPoints = mutableListOf<GeoPoint>()
     private val goals = mutableListOf<GoalPoint>()
+    private val totalPoints = 8
 
     private constructor(){
     }
@@ -38,6 +40,20 @@ class GoalPointManager {
         } else {
             return testList()
         }
+    }
+
+    fun totalPointsVisited(): MutableState<Int> {
+        goalsVisited.value = 0
+        goals.forEach { i ->
+            if(i.visited){
+                goalsVisited.value++
+            }
+        }
+        return goalsVisited
+    }
+
+    fun totalPoints(): Int{
+        return totalPoints
     }
 
     fun getGoalsAsGeoPoint(): MutableList<GeoPoint> {
@@ -80,6 +96,7 @@ class GoalPointManager {
 
         return goals
     }
+
 
     companion object {
         private var goalPointManager: GoalPointManager? = null

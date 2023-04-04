@@ -33,6 +33,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import com.example.mobile_development_2_2.R
+import com.example.mobile_development_2_2.data.GoalTimer
 import com.example.mobile_development_2_2.data.Lang
 import com.example.mobile_development_2_2.gui.GoalPoint
 import com.example.mobile_development_2_2.gui.GoalPointManager
@@ -60,6 +61,7 @@ import org.osmdroid.views.overlay.OverlayItem
 import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
+import java.util.*
 import kotlin.math.round
 
 
@@ -160,7 +162,7 @@ class MapFragment : LocationListener {
                         onClick = {
 
                             GoalPointManager.getGoalPointManager().start(myLocation);
-                            //currentRoute.setPoints(GoalPointManager.getGoalPointManager().getGoalsAsGeoPoint() .toMutableList())
+                            GoalTimer.start()
                         },
                         modifier = Modifier
                             .padding(bottom = 20.dp),
@@ -187,7 +189,8 @@ class MapFragment : LocationListener {
             ) {
                 Button(
                     onClick = {
-                        GoalPointManager.getGoalPointManager().stop();
+                        GoalPointManager.getGoalPointManager().stop()
+                        GoalTimer.stop()
                     },
                     modifier = Modifier
                         .padding(top = 20.dp, start = 30.dp),
@@ -220,7 +223,7 @@ class MapFragment : LocationListener {
 
                 ) {
                     Text(
-                        text = "unkown " + Lang.get(
+                        text = "${GoalPointManager.getGoalPointManager().goalsVisited.value} / ${GoalPointManager.getGoalPointManager().totalPoints()} " + Lang.get(
                             R.string.map_points
                         ),
                         textAlign = TextAlign.Center,
@@ -231,7 +234,7 @@ class MapFragment : LocationListener {
 
                     )
                     Text(
-                        text = "unkown",
+                        text = "${round(GoalTimer.secondsPassed.value * 10) / 10} sec",
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .wrapContentHeight(Alignment.Bottom)
