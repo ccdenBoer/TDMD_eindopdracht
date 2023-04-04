@@ -74,8 +74,8 @@ class GoalPointManager {
         var g5 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
         var g6 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
         var g7 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
-        var g8 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
-
+        //var g8 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
+        var g8 = GoalPoint(GeoPoint(51.59437 , 4.7831083))
         goals.add(g1)
         goals.add(g2)
         goals.add(g3)
