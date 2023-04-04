@@ -63,7 +63,7 @@ class GoalPointManager {
     fun totalPointsVisited(): MutableState<Int> {
         goalsVisited.value = 0
         goals.forEach { i ->
-            if(i.visited){
+            if(i.visited.value){
                 goalsVisited.value++
             }
         }
@@ -108,7 +108,10 @@ class GoalPointManager {
 
         goals.forEach { i ->
             geoPoints.add(i.location)
-            addGeofenceLocation(i.location.latitude, i.location.longitude, i.name)
+            Thread{
+                addGeofenceLocation(i.location.latitude, i.location.longitude, i.name)
+            }.start()
+
         }
 
 
@@ -156,6 +159,13 @@ class GoalPointManager {
             addOnSuccessListener {
                 Log.d(TAG, "Geofence with ID $id removed successfully.")
                 Log.d(TAG, "$amountOffGeofences amount of active geofences left")
+                goals.forEach(){gp ->
+                    //Log.d(TAG, "comparing ${gp.name} and ${id}")
+                    if(gp.name.equals(id)){
+                        Log.d(TAG, "visited $gp.name")
+                        gp.visited.value = true
+                    }
+                }
                 goalsVisited.value++
                 if(goalsVisited.value >= totalPoints){
                     finished.value = true

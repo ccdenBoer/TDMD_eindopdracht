@@ -39,11 +39,11 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             for (geofence in geofenceList) {
                 Log.d(TAG, "onReceive: " + geofence.requestId + " triggered ")
 
-
-
-                notificationHelper.sendHighPriorityNotification("notification", "test", MainActivity::class.java)
-
                 GoalPointManager.getGoalPointManager(null).removeGeofence(geofence.requestId)
+
+                //notificationHelper.sendHighPriorityNotification("notification", "test", MainActivity::class.java)
+
+
             }
         }
     }
