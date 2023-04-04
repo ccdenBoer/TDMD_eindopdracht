@@ -325,19 +325,21 @@ class MapFragment : LocationListener {
 
         )
 
+        LaunchedEffect(key1 = GoalPointManager.getGoalPointManager(null).getGoals()) {
+            unvisitedGoalOverlay.removeAllItems()
+            unvisitedGoalOverlay.addItems(
+                locations.filter { !it.visited.value }
+                    .map { GoalItem(it) }
+            )
 
-        locations.forEach { location ->
-            LaunchedEffect(location.visited.value) {
-                // Update the overlay for the current location
-                if (location.visited.value) {
-                    visitedGoalOverlay.removeItem(GoalItem(location))
-                    visitedGoalOverlay.addItem(GoalItem(location))
-                } else {
-                    unvisitedGoalOverlay.removeItem(GoalItem(location))
-                    unvisitedGoalOverlay.addItem(GoalItem(location))
-                }
-                mapView.invalidate() // Ensures the map is updated on screen
-            }
+            mapView.invalidate() // Ensures the map is updated on screen
+        }
+        LaunchedEffect(key1 = GoalPointManager.getGoalPointManager(null).getGoals()) {
+            visitedGoalOverlay.removeAllItems()
+            visitedGoalOverlay.addItems(
+                locations.filter { it.visited.value }.map { GoalItem(it) }
+            )
+            mapView.invalidate() // Ensures the map is updated on screen
         }
 
 

@@ -37,10 +37,15 @@ class GoalPointManager {
         return started.value
     }
 
+    fun hasFinished(): Boolean {
+        return finished.value
+    }
+
     fun start(location: MyLocationNewOverlay) {
         amountOffGeofences = 8
         generateGoals(location)
         started.value = true
+        finished.value = false
     }
 
     fun stop() {

@@ -23,9 +23,12 @@ import com.example.mobile_development_2_2.data.Lang
 import com.example.mobile_development_2_2.data.loadWinsFromDatabase
 import kotlin.math.round
 
+var finished: MutableState<Boolean> = mutableStateOf(false)
+var wins: MutableList<GoalDatabase.Win> = mutableListOf()
+
 @Composable
 fun SettingsFragment(modifier: Modifier, database: GoalDatabase) {
-
+    finished.value = false
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -109,8 +112,7 @@ fun Settings() {
         }
     }
 }
-var finished: MutableState<Boolean> = mutableStateOf(false)
-var wins: MutableList<GoalDatabase.Win> = mutableListOf()
+
 @Composable
 fun HistoryList(database: GoalDatabase) {
     Surface(
