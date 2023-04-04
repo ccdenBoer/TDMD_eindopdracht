@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import com.example.mobile_development_2_2.data.Lang
-import com.example.mobile_development_2_2.gui.fragments.home.HelpItem
     @Composable
     fun SettingsFragment(modifier: Modifier) {
 
@@ -106,7 +105,7 @@ import com.example.mobile_development_2_2.gui.fragments.home.HelpItem
     @Composable
     fun AgsLogo() {
         Image(
-            painter = painterResource(id = R.drawable.ic_logo),
+            painter = painterResource(id = R.drawable.img_infocolor),
             contentDescription = null,
             modifier = Modifier.background(color = MaterialTheme.colors.background),
                 //.align(Alignment.CenterStart)

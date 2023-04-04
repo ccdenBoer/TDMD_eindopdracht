@@ -8,11 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
-import com.example.mobile_development_2_2.map.route.POI
 import com.example.mobile_development_2_2.gui.MainActivity
 import com.example.mobile_development_2_2.gui.fragments.MapFragment
-import com.example.mobile_development_2_2.map.route.Route
-import com.example.mobile_development_2_2.map.route.RouteManager
 import com.google.android.gms.location.*
 
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
@@ -41,12 +38,12 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 Log.d(TAG, "onReceive: " + geofence.requestId + " triggered ")
                 PopupHelper.SetState(true)
 
-                val poi = RouteManager.getRouteManager(null).get_CurrentPoi()
-                var description = poi.shortDescription
+                //val poi = RouteManager.getRouteManager(null).get_CurrentPoi()
+                //var description = poi.shortDescription
 
-                notificationHelper.sendHighPriorityNotification(RouteManager.getRouteManager(null).getStringByName("notification") + " " + poi.name, "", MainActivity::class.java)
-                RouteManager.getRouteManager(null).triggeredGeofence()
-                RouteManager.getRouteManager(null).selectedRoute.totalPoisVisited.value++
+                //notificationHelper.sendHighPriorityNotification(RouteManager.getRouteManager(null).getStringByName("notification") + " " + poi.name, "", MainActivity::class.java)
+/*                RouteManager.getRouteManager(null).triggeredGeofence()
+                RouteManager.getRouteManager(null).selectedRoute.totalPoisVisited.value++*/
 
             }
         }

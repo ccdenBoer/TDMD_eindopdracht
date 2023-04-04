@@ -38,18 +38,11 @@ import com.example.mobile_development_2_2.R
 
 import com.example.mobile_development_2_2.data.Lang
 import com.example.mobile_development_2_2.data.PopupHelper
-import com.example.mobile_development_2_2.gui.fragments.home.HelpItem
-import com.example.mobile_development_2_2.gui.fragments.home.HomeScreen
-import com.example.mobile_development_2_2.gui.fragments.home.InfoScreen
-import com.example.mobile_development_2_2.gui.fragments.poi.POIDetailScreen
-import com.example.mobile_development_2_2.gui.fragments.poi.POIListScreen
-import com.example.mobile_development_2_2.gui.fragments.route.RouteListScreen
-import com.example.mobile_development_2_2.map.route.RouteManager
+
 import com.example.mobile_development_2_2.gui.fragments.MapFragment
 import com.example.mobile_development_2_2.gui.fragments.settings.SettingsFragment
 import com.example.mobile_development_2_2.map.gps.GPSLocationProvider
 import com.example.mobile_development_2_2.map.gps.GetLocationProvider
-import com.example.mobile_development_2_2.map.route.Route
 import com.example.mobile_development_2_2.ui.theme.MobileDevelopment2_2Theme
 import com.example.mobile_development_2_2.ui.viewmodels.OSMViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -69,11 +62,11 @@ class MainActivity : ComponentActivity() {
     }
 
     enum class Fragments(@StringRes val title: Int) {
-        Home(title = R.string.homeScreen),
-        Info(title = R.string.infoScreen),
-        POIList(title = R.string.poiListScreen),
-        POI(title = R.string.POIScreen),
-        Route(title = R.string.routeScreen),
+        //Home(title = R.string.homeScreen),
+        //Info(title = R.string.infoScreen),
+        //POIList(title = R.string.poiListScreen),
+        //POI(title = R.string.POIScreen),
+        //Route(title = R.string.routeScreen),
         Map(title = R.string.mapScreen),
         Settings(title = R.string.settingsScreen),
     }
@@ -86,7 +79,7 @@ class MainActivity : ComponentActivity() {
         Lang.onColorblindChange {  }
         Lang.loadSettings()
 
-        RouteManager.getRouteManager(this)
+        //RouteManager.getRouteManager(this)
 
 
         setContent {
@@ -96,9 +89,6 @@ class MainActivity : ComponentActivity() {
             val openDialog = remember {
                 mutableStateOf(false)
             }
-            val openMapDialog = remember {
-                mutableStateOf(false)
-            }
 
             PopupHelper.SetState(openDialog)
 
@@ -106,7 +96,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    MainScreen(openDialog, openMapDialog)
+                    MainScreen(openDialog)
 
 
                 }
@@ -165,7 +155,6 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainScreen(
         openDialog: MutableState<Boolean>,
-        openMapDialog: MutableState<Boolean>,
         navController: NavHostController = rememberNavController()
     ) {
         val premissions = rememberMultiplePermissionsState(
@@ -186,7 +175,7 @@ class MainActivity : ComponentActivity() {
 
         // Get the name of the current screen
         val currentScreen = Fragments.valueOf(
-            backStackEntry?.destination?.route ?: Fragments.Home.name
+            backStackEntry?.destination?.route ?: Fragments.Map.name
         )
 
         Scaffold(
@@ -197,95 +186,25 @@ class MainActivity : ComponentActivity() {
                     navigateUp = { navController.navigateUp() },
                     onSettingsButtonClicked = { navController.navigate(Fragments.Settings.name) })
             },
-            bottomBar = {
-                BottomNavigationBar(
-                    onHomeButtonClicked = {
-                        navController.backQueue.clear()
-                        navController.navigate(Fragments.Home.name)
-                    },
-                    onHomePOIClicked = {
-                        navController.backQueue.clear()
-                        navController.navigate(Fragments.POIList.name)
-                    },
-                    onMapButtonClicked = {
-                        navController.backQueue.clear()
-                        navController.navigate(Fragments.Route.name)
-                        premissions.launchMultiplePermissionRequest()
-                        Log.d("123", "map")
-                    }
-                )
-            },
             backgroundColor = MaterialTheme.colors.background,
             contentColor = MaterialTheme.colors.background
         ) { innerpadding ->
             NavHost(
                 navController = navController,
-                startDestination = Fragments.Home.name,
+                startDestination = Fragments.Map.name,
                 modifier = Modifier
                     .padding(innerpadding)
                     .background(MaterialTheme.colors.background, RectangleShape)
             ) {
-                composable(route = Fragments.Home.name) {
-                    HomeScreen(
-                        modifier = Modifier,
-                        helpItems = HelpItem.getItems(),
-                        onPOIButtonClicked = {
-                            navController.navigate(Fragments.Info.name)
-
-                        })
-
-                }
-                composable(route = Fragments.Route.name) {
-                    RouteListScreen(
-                        modifier = Modifier,
-                        routes = RouteManager.getRouteManager(baseContext).GetRoutes(),
-                        onRouteClicked = {
-                            Log.d("route", RouteManager.getRouteManager(baseContext).getSelectedRoute().name)
-                            if(RouteManager.getRouteManager(null).getSelectedRoute().hasProgress()){
-                                openMapDialog.value = true
-                            } else{
-                                navController.navigate(Fragments.Map.name)
-                            }
-
-
-
-                        },
-                        onPOIClicked = {
-                            navController.navigate(Fragments.POIList.name)
-                        }
-                    )
-                }
-                composable(route = Fragments.POIList.name) {
-                    POIListScreen(
-                        modifier = Modifier,
-                        route = RouteManager.getRouteManager(baseContext).getSelectedRoute(),
-                        onPOIClicked = {
-                            navController.navigate(Fragments.POI.name)
-                        }
-                    )
-                }
-                composable(route = Fragments.Info.name) {
-                    InfoScreen(
-                        modifier = Modifier,
-                        helpItem = HelpItem.getSelectedItem()
-                    )
-                }
-                composable(route = Fragments.POI.name) {
-                    POIDetailScreen(
-                        modifier = Modifier,
-                        poi = RouteManager.getRouteManager(baseContext).getSelectedPOI()
-                    )
-                }
                 composable(route = Fragments.Map.name) {
                     map.MapScreen(
 
                         viewModel = osmViewModel,
                         modifier = Modifier,
                         onPOIClicked = {
-                            navController.navigate(Fragments.POI.name)
+                            Log.d(TAG, "poi clicked")
                         }
                     )
-//                   map.setRoute(RouteManager.getSelectedRoute().name)
 
 
                 }
@@ -295,22 +214,6 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                     )
                 }
-            }
-
-            if (openDialog.value) {
-                popUp("e", "e", openDialog) { navController.navigate(Fragments.POI.name) }
-            }
-
-            if (openMapDialog.value) {
-                mapPopUp(
-                    openMapDialog ,
-                {
-                    navController.navigate(Fragments.Map.name)
-                },
-                {
-                    RouteManager.getRouteManager(null).getSelectedRoute().resetProgress()
-                    navController.navigate(Fragments.Map.name)
-                })
             }
         }
 
@@ -438,7 +341,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
+/*
     @Composable
     fun popUp(
         title: String,
@@ -483,9 +386,9 @@ class MainActivity : ComponentActivity() {
             contentColor = Color.Black
         )
 
-    }
+    }*/
 
-    @Composable
+/*    @Composable
     fun mapPopUp(
         openMapDialog: MutableState<Boolean>,
         onContinueButtonClicked: () -> Unit,
@@ -528,19 +431,11 @@ class MainActivity : ComponentActivity() {
             contentColor = Color.Black
         )
 
-    }
+    }*/
 
     override fun onStop() {
-        RouteManager.getRouteManager(null).saveRoutesProgress()
         Lang.saveSettings()
 
         super.onStop()
     }
 }
-
-
-/*    @Preview(showBackground = true)
-    @Composable
-    fun BottomNavigationBarPreview() {
-        BottomNavigationBar()
-    }*/

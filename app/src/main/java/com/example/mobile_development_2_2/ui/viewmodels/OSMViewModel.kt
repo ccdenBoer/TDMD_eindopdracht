@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobile_development_2_2.data.GeofenceHelper
 import com.example.mobile_development_2_2.map.gps.GetLocationProvider
-import com.example.mobile_development_2_2.map.route.POI
-import com.example.mobile_development_2_2.map.route.RouteManager
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
@@ -34,16 +32,6 @@ class OSMViewModel(getLocationProvider: GetLocationProvider, context : Context) 
         replay = 1,
         started = SharingStarted.WhileSubscribed()
     )
-
-    val pois = getLocations()
-
-
-    private fun getLocations(): List<POI> {
-        val route = RouteManager.getRouteManager(null).getSelectedRoute()
-        return route.POIs
-
-
-    }
 
 
     val provider = Provider(
