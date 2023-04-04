@@ -40,7 +40,7 @@ class GoalPointManager {
     }
 
     fun stop() {
-        removeGeofence()
+        removeAllGeofence()
         started.value = false
     }
 
@@ -67,15 +67,17 @@ class GoalPointManager {
 
     fun generateGoals(location: MyLocationNewOverlay): MutableList<GoalPoint> {
         Log.d("GEOPOINTMANAGER", "${location.myLocation.latitude} - ${location.myLocation.longitude}")
-        var g1 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
-        var g2 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
-        var g3 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
-        var g4 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
-        var g5 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
-        var g6 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
-        var g7 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
-        //var g8 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
-        var g8 = GoalPoint(GeoPoint(51.59437 , 4.7831083))
+        var g1 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude + Math.random() / 100), "1");
+        var g2 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude + Math.random() / 100), "2");
+        var g3 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude - Math.random() / 100), "3");
+        var g4 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude - Math.random() / 100), "4");
+        var g5 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100), "5");
+//        var g6 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100), "6");
+//        var g7 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100), "7");
+//        var g8 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100), "8");
+        var g7 = GoalPoint(GeoPoint(  51.5855817 , 4.789675), "6")
+        var g6 = GoalPoint(GeoPoint(37.4171833 , -122.202085),"7" )
+        var g8 = GoalPoint(GeoPoint(51.59437 , 4.7831083), "8")
         goals.add(g1)
         goals.add(g2)
         goals.add(g3)
@@ -123,9 +125,21 @@ class GoalPointManager {
         }
     }
 
-    fun removeGeofence() {
-        Log.d(TAG, "removeGeofence")
+    fun removeAllGeofence() {
+        Log.d(TAG, "removed all geofences")
         geofenceHelper?.getPendingIntent()?.let { geofencingClient?.removeGeofences(it)  }
+    }
+
+    fun removeGeofence(id: String) {
+        val geofenceIdsToRemove = mutableListOf(id)
+        geofencingClient?.removeGeofences(geofenceIdsToRemove)?.run {
+            addOnSuccessListener {
+                Log.d(TAG, "Geofence with ID $id removed successfully.")
+            }
+            addOnFailureListener {
+                Log.d(TAG, "Failed to remove geofence with ID $id: ${it.message}")
+            }
+        }
     }
 
     companion object {

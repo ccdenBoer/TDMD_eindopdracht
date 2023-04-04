@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.example.mobile_development_2_2.gui.GoalPointManager
 import com.example.mobile_development_2_2.gui.MainActivity
 import com.example.mobile_development_2_2.gui.fragments.MapFragment
 import com.google.android.gms.location.*
@@ -20,8 +21,9 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         var notificationHelper = NotificationHelper(context)
 
 
-        //Toast.makeText(context, "geofence triggered", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "reached point", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "onReceive: geofence triggered")
+
 
         var geofencingEvent : GeofencingEvent? = GeofencingEvent.fromIntent(intent)
 
@@ -41,10 +43,10 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 //val poi = RouteManager.getRouteManager(null).get_CurrentPoi()
                 //var description = poi.shortDescription
 
-                //notificationHelper.sendHighPriorityNotification(RouteManager.getRouteManager(null).getStringByName("notification") + " " + poi.name, "", MainActivity::class.java)
-/*                RouteManager.getRouteManager(null).triggeredGeofence()
+                notificationHelper.sendHighPriorityNotification("notification", "test", MainActivity::class.java)
+/*              RouteManager.getRouteManager(null).triggeredGeofence()
                 RouteManager.getRouteManager(null).selectedRoute.totalPoisVisited.value++*/
-
+                GoalPointManager.getGoalPointManager(null).removeGeofence(geofence.requestId)
             }
         }
     }
