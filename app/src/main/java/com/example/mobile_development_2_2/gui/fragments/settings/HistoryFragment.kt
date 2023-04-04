@@ -123,6 +123,7 @@ fun HistoryList(database: GoalDatabase) {
         Log.d("HistoryFragment", "Loading list")
         loadWinsFromDatabase(database) { loadedWins ->
             Log.d("HistoryFragment", "Loaded list callback")
+            wins.clear()
             wins.addAll(0, loadedWins)
             finished.value = true
         }

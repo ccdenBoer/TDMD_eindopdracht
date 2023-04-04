@@ -60,11 +60,6 @@ class MainActivity : ComponentActivity() {
     private val TAG = "MainActivity"
 
     enum class Fragments(@StringRes val title: Int) {
-        //Home(title = R.string.homeScreen),
-        //Info(title = R.string.infoScreen),
-        //POIList(title = R.string.poiListScreen),
-        //POI(title = R.string.POIScreen),
-        //Route(title = R.string.routeScreen),
         Map(title = R.string.mapScreen),
         History(title = R.string.historyScreen),
     }
@@ -185,7 +180,7 @@ class MainActivity : ComponentActivity() {
                         viewModel = osmViewModel,
                         modifier = Modifier,
                         onPOIClicked = {
-                            Log.d(TAG, "poi clicked")
+                            Log.d(TAG, "goal clicked")
                         },
                         database = database
                     )
