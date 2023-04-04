@@ -34,6 +34,8 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import com.example.mobile_development_2_2.R
 import com.example.mobile_development_2_2.data.Lang
+import com.example.mobile_development_2_2.gui.GoalPoint
+import com.example.mobile_development_2_2.gui.GoalPointManager
 import com.example.mobile_development_2_2.ui.viewmodels.OSMViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -43,6 +45,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import okhttp3.internal.wait
 import org.osmdroid.bonuspack.kml.KmlDocument
 import org.osmdroid.bonuspack.kml.KmlGeometry
 import org.osmdroid.bonuspack.kml.Style
@@ -75,7 +78,19 @@ class MapFragment : LocationListener {
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
     fun MapScreen(viewModel: OSMViewModel, modifier: Modifier, onPOIClicked: () -> Unit) {
+        context = LocalContext.current
         viewModel.provider.locationListener = this
+        val mapView = remember {
+            MapView(context)
+        }
+        this.mapView = mapView
+        mapView.setMultiTouchControls(true)
+
+        myLocation = remember(mapView) {
+            MyLocationNewOverlay(viewModel.provider, mapView)
+        }
+        myLocation.enableMyLocation()
+
 
         Surface(
             modifier = modifier.fillMaxSize()
@@ -88,11 +103,21 @@ class MapFragment : LocationListener {
                 )
             )
 
+
+            //GoalPointManager.getGoalPointManager().generateGoals(myLocation);
+
+
             OSM(
                 modifier = modifier,
                 provider = viewModel.provider,
+                routePoints = GoalPointManager.getGoalPointManager().getGoalsAsGeoPoint()
+                    .toMutableList(),
                 onPOIClicked = onPOIClicked
             )
+
+
+
+
             if (!premissions.allPermissionsGranted) {
                 Column {
 
@@ -112,11 +137,60 @@ class MapFragment : LocationListener {
                 )
             }
 
+            Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.End) {
+                Button(
+                    onClick = { myLocation.enableFollowLocation() },
+                    modifier = Modifier
+                        .padding(bottom = 20.dp, end = 30.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primary
+                    )
+                ) {
+                    Text(
+                        text = Lang.get(R.string.map_recenter),
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
 
-            Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.Start) {
+            if (!GoalPointManager.getGoalPointManager().hasStarted()) {
+
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(
+                        onClick = {
+
+                            GoalPointManager.getGoalPointManager().start(myLocation);
+                            //currentRoute.setPoints(GoalPointManager.getGoalPointManager().getGoalsAsGeoPoint() .toMutableList())
+                        },
+                        modifier = Modifier
+                            .padding(bottom = 20.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.primary,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(
+                            text = Lang.get(R.string.map_start),
+                            color = MaterialTheme.colors.onPrimary
+                        )
+
+                    }
+                }
+
+            }
+        }
+        if (GoalPointManager.getGoalPointManager().hasStarted()) {
+
+            Row(
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.Start
+            ) {
                 Button(
                     onClick = {
-
+                        GoalPointManager.getGoalPointManager().stop();
                     },
                     modifier = Modifier
                         .padding(top = 20.dp, start = 30.dp),
@@ -134,10 +208,13 @@ class MapFragment : LocationListener {
 
             }
 
-            Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.End) {
+            Row(
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.End
+            ) {
                 Card(
                     modifier = Modifier
-                        .padding(top = 20.dp, end = 30.dp)
+                        .padding(top = 20.dp, end = 30.dp, start = 250.dp)
                         .clip(RoundedCornerShape(12.dp))
                         .height(60.dp)
                         .width(120.dp),
@@ -177,19 +254,30 @@ class MapFragment : LocationListener {
 
         modifier: Modifier = Modifier,
         provider: IMyLocationProvider,
+        routePoints: MutableList<GeoPoint> = mutableListOf(),
         onPOIClicked: () -> Unit,
     ) {
-        context = LocalContext.current
 
+        val locations = GoalPointManager.getGoalPointManager().getGoals();
+        val listener = object : ItemizedIconOverlay.OnItemGestureListener<POIItem> {
+            override fun onItemSingleTapUp(index: Int, item: POIItem?): Boolean {
 
-        val mapView = remember {
-            MapView(context)
+                return true
+            }
+
+            override fun onItemLongPress(index: Int, item: POIItem?): Boolean {
+
+                return false
+            }
         }
-        this.mapView = mapView
-        mapView.setMultiTouchControls(true)
 
 
-/*        //FIXME poilayer kan toegevoegd worden als er point of interest zijn
+        val currentRoute = remember {
+            Polyline()
+        }
+        currentRoute.outlinePaint.color = MaterialTheme.colors.primary.toArgb()
+
+        //FIXME poilayer kan toegevoegd worden als er point of interest zijn
         val poiOverlay = remember {
             ItemizedIconOverlay(
                 mutableListOf<POIItem>(),
@@ -222,13 +310,8 @@ class MapFragment : LocationListener {
                 listener,
                 context
             )
-        }*/
-
-
-        val currentRoute = remember {
-            Polyline()
         }
-        currentRoute.outlinePaint.color = MaterialTheme.colors.primary.toArgb()
+
 
         //todo Als we willen dat de gelopen route wordt getekend en/of een correctieroute wordt getekend
 //        val walkedRoute = remember {
@@ -241,14 +324,6 @@ class MapFragment : LocationListener {
 //        correctionRoute.color = R.color.teal_700
 
 
-        val myLocation = remember(mapView) {
-            MyLocationNewOverlay(provider, mapView)
-        }
-        this.myLocation = myLocation
-        myLocation.enableMyLocation()
-
-
-
         AndroidView(
             factory = {
                 mapView.apply {
@@ -258,16 +333,16 @@ class MapFragment : LocationListener {
                     controller.setZoom(17.0)
 
 
-                    //mapView.overlays.add(poiOverlay)
+                    mapView.overlays.add(poiOverlay)
 
 
-/*                    mapView.overlays.add(poiOverlay)
+                    mapView.overlays.add(poiOverlay)
                     mapView.overlays.add(visitedOverlay)
-                    mapView.overlays.add(currentOverlay)*/
+                    mapView.overlays.add(currentOverlay)
 
-                    //mapView.overlays.add(myLocation)
+                    mapView.overlays.add(myLocation)
 
-//                    mapView.overlays.add(currentRoute)
+                    mapView.overlays.add(currentRoute)
 
 
                 }
@@ -279,7 +354,30 @@ class MapFragment : LocationListener {
 
         )
 
+        LaunchedEffect(locations) {
+            poiOverlay.removeAllItems()
+            poiOverlay.addItems(
+                locations.filter { !it.visited }.filterIndexed { index, gp -> index != 0 }
+                    .map { POIItem(it) }
+            )
 
+            mapView.invalidate() // Ensures the map is updated on screen
+        }
+        LaunchedEffect(locations) {
+            visitedOverlay.removeAllItems()
+            visitedOverlay.addItems(
+                locations.filter { it.visited }.map { POIItem(it) }
+            )
+            mapView.invalidate() // Ensures the map is updated on screen
+        }
+        LaunchedEffect(locations) {
+            currentOverlay.removeAllItems()
+            currentOverlay.addItems(
+                locations.filter { !it.visited }.filterIndexed { index, gp -> index == 0 }
+                    .map { POIItem(it) }
+            )
+            mapView.invalidate() // Ensures the map is updated on screen
+        }
 
 
     }
@@ -321,4 +419,5 @@ class MapFragment : LocationListener {
 }
 
 private class POIItem(
-) : OverlayItem("", null, GeoPoint(50, 50))
+    val gp: GoalPoint
+) : OverlayItem("hallo", null, GeoPoint(gp.location.latitude, gp.location.longitude))
