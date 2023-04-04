@@ -22,6 +22,7 @@ class GoalPointManager {
     private val geoPoints = mutableListOf<GeoPoint>()
     private val goals = mutableListOf<GoalPoint>()
     var context: Context?
+    private val TAG = "RouteManager"
 
     private constructor(context: Context?) {
         Log.d(LOG_TAG, "constructor")
@@ -39,6 +40,7 @@ class GoalPointManager {
     }
 
     fun stop() {
+        removeGeofence()
         started.value = false
     }
 
@@ -120,6 +122,12 @@ class GoalPointManager {
             }
         }
     }
+
+    fun removeGeofence() {
+        Log.d(TAG, "removeGeofence")
+        geofenceHelper?.getPendingIntent()?.let { geofencingClient?.removeGeofences(it)  }
+    }
+
     companion object {
         private var geofencingClient: GeofencingClient? = null
         private var geofenceHelper: GeofenceHelper? = null
