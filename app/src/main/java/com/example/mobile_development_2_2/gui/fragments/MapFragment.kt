@@ -104,9 +104,6 @@ class MapFragment : LocationListener {
             )
 
 
-            //GoalPointManager.getGoalPointManager().generateGoals(myLocation);
-
-
             OSM(
                 modifier = modifier,
                 provider = viewModel.provider,
@@ -300,28 +297,10 @@ class MapFragment : LocationListener {
                 context
             )
         }
-        val currentOverlay = remember {
-            ItemizedIconOverlay(
-                mutableListOf<POIItem>(),
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.blue_point
-                ),
-                listener,
-                context
-            )
-        }
 
 
-        //todo Als we willen dat de gelopen route wordt getekend en/of een correctieroute wordt getekend
-//        val walkedRoute = remember {
-//            Polyline()
-//        }
-//        walkedRoute.color = R.color.black
-//        val correctionRoute = remember {
-//            Polyline()
-//        }
-//        correctionRoute.color = R.color.teal_700
+
+
 
 
         AndroidView(
@@ -338,7 +317,7 @@ class MapFragment : LocationListener {
 
                     mapView.overlays.add(poiOverlay)
                     mapView.overlays.add(visitedOverlay)
-                    mapView.overlays.add(currentOverlay)
+                    //mapView.overlays.add(currentOverlay)
 
                     mapView.overlays.add(myLocation)
 
@@ -357,7 +336,7 @@ class MapFragment : LocationListener {
         LaunchedEffect(locations) {
             poiOverlay.removeAllItems()
             poiOverlay.addItems(
-                locations.filter { !it.visited }.filterIndexed { index, gp -> index != 0 }
+                locations.filter { !it.visited }
                     .map { POIItem(it) }
             )
 
@@ -370,14 +349,7 @@ class MapFragment : LocationListener {
             )
             mapView.invalidate() // Ensures the map is updated on screen
         }
-        LaunchedEffect(locations) {
-            currentOverlay.removeAllItems()
-            currentOverlay.addItems(
-                locations.filter { !it.visited }.filterIndexed { index, gp -> index == 0 }
-                    .map { POIItem(it) }
-            )
-            mapView.invalidate() // Ensures the map is updated on screen
-        }
+
 
 
     }
@@ -385,33 +357,15 @@ class MapFragment : LocationListener {
     override fun onLocationChanged(p0: Location) {
 
 
-        if (myLocation.isFollowLocationEnabled) {
-
-
-            mapView.mapOrientation = 360 - p0.bearing
-
-
-            mapView.controller.setZoom(17.0)
-            mapView.setMapCenterOffset(0, 600)
-
-            myLocation.setDirectionIcon(
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.redpointer
-                )!!.toBitmap(150, 150)
-            )
-
-        } else {
-            mapView.mapOrientation = 0f
-            mapView.setMapCenterOffset(0, 0)
-            myLocation.isDrawAccuracyEnabled = true
-            myLocation.setDirectionIcon(
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.redpointer
-                )!!.toBitmap(100, 100)
-            )
-        }
+        mapView.mapOrientation = 0f
+        mapView.setMapCenterOffset(0, 0)
+        myLocation.isDrawAccuracyEnabled = true
+        myLocation.setDirectionIcon(
+            ContextCompat.getDrawable(
+                context,
+                R.drawable.redpointer
+            )!!.toBitmap(100, 100)
+        )
 
         mapView.invalidate()
 

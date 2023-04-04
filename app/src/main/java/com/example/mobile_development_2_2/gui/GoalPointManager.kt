@@ -53,14 +53,14 @@ class GoalPointManager {
 
     fun generateGoals(location: MyLocationNewOverlay): MutableList<GoalPoint> {
         Log.d("GEOPOINTMANAGER", "${location.myLocation.latitude} - ${location.myLocation.longitude}")
-        var g1 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
-        var g2 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
-        var g3 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
-        var g4 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
-        var g5 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
-        var g6 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100));
-        var g7 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
-        var g8 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100));
+        var g1 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 200, location.myLocation.longitude + Math.random() / 200));
+        var g2 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 200, location.myLocation.longitude + Math.random() / 200));
+        var g3 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 200, location.myLocation.longitude - Math.random() / 200));
+        var g4 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 200, location.myLocation.longitude - Math.random() / 200));
+        var g5 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 200, location.myLocation.longitude + Math.random() / 200));
+        var g6 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 200, location.myLocation.longitude + Math.random() / 200));
+        var g7 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 200, location.myLocation.longitude - Math.random() / 200));
+        var g8 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 200, location.myLocation.longitude - Math.random() / 200));
 
         goals.add(g1)
         goals.add(g2)
