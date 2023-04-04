@@ -7,13 +7,14 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.PackageManagerCompat.LOG_TAG
-import com.example.mobile_development_2_2.data.GeofenceHelper
+import com.example.mobile_development_2_2.data.*
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
+import java.time.LocalDateTime
 
 class GoalPointManager {
     var finished: MutableState<Boolean> = mutableStateOf(false)
@@ -23,7 +24,7 @@ class GoalPointManager {
     private val geoPoints = mutableListOf<GeoPoint>()
     private val goals = mutableListOf<GoalPoint>()
     var context: Context?
-    private val TAG = "RouteManager"
+    private val TAG = "GoalPointManager"
     var amountOffGeofences = 6
     private val totalPoints = 8
 
@@ -46,6 +47,7 @@ class GoalPointManager {
         removeAllGeofence()
         geoPoints.clear()
         goals.clear()
+        goalsVisited.value = 0
         started.value = false
 
     }
@@ -87,14 +89,14 @@ class GoalPointManager {
 
     fun generateGoals(location: MyLocationNewOverlay): MutableList<GoalPoint> {
         Log.d("GEOPOINTMANAGER", "${location.myLocation.latitude} - ${location.myLocation.longitude}")
-        var g1 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude + Math.random() / 100), "1");
-        var g2 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude + Math.random() / 100), "2");
-        var g3 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude - Math.random() / 100), "3");
-        var g4 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 100, location.myLocation.longitude - Math.random() / 100), "4");
-        var g5 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100), "5");
-        var g6 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude + Math.random() / 100), "6");
-        var g7 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100), "7");
-        var g8 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 100, location.myLocation.longitude - Math.random() / 100), "8");
+        var g1 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 1000, location.myLocation.longitude + Math.random() / 1000), "1");
+        var g2 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 1000, location.myLocation.longitude + Math.random() / 1000), "2");
+        var g3 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 1000, location.myLocation.longitude - Math.random() / 1000), "3");
+        var g4 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 1000, location.myLocation.longitude - Math.random() / 1000), "4");
+        var g5 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 1000, location.myLocation.longitude + Math.random() / 1000), "5");
+        var g6 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 1000, location.myLocation.longitude + Math.random() / 1000), "6");
+        var g7 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 1000, location.myLocation.longitude - Math.random() / 1000), "7");
+        var g8 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 1000, location.myLocation.longitude - Math.random() / 1000), "8");
         goals.add(g1)
         goals.add(g2)
         goals.add(g3)
@@ -154,6 +156,17 @@ class GoalPointManager {
             addOnSuccessListener {
                 Log.d(TAG, "Geofence with ID $id removed successfully.")
                 Log.d(TAG, "$amountOffGeofences amount of active geofences left")
+                goalsVisited.value++
+                if(goalsVisited.value >= totalPoints){
+                    finished.value = true
+                    var date = LocalDateTime.now().toString()
+                    Log.d(TAG, "Adding win")
+                    getTotalWinsFromDatabase(GoalDatabase.getInstance(context!!)){
+                        Log.d(TAG, "Adding win for real id: ${it+1}")
+                        addWinsFromDatabase(GoalDatabase.getInstance(context!!), GoalDatabase.Win(it+1, date, GoalTimer.secondsPassed.value))
+                    }
+
+                }
             }
             addOnFailureListener {
                 Log.d(TAG, "Failed to remove geofence with ID $id: ${it.message}")

@@ -18,8 +18,10 @@ import com.example.mobile_development_2_2.R
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import com.example.mobile_development_2_2.data.GoalDatabase
+import com.example.mobile_development_2_2.data.GoalTimer
 import com.example.mobile_development_2_2.data.Lang
 import com.example.mobile_development_2_2.data.loadWinsFromDatabase
+import kotlin.math.round
 
 @Composable
 fun SettingsFragment(modifier: Modifier, database: GoalDatabase) {
@@ -107,7 +109,8 @@ fun Settings() {
         }
     }
 }
-
+var finished: MutableState<Boolean> = mutableStateOf(false)
+var wins: MutableList<GoalDatabase.Win> = mutableListOf()
 @Composable
 fun HistoryList(database: GoalDatabase) {
     Surface(
@@ -115,40 +118,45 @@ fun HistoryList(database: GoalDatabase) {
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
-        var wins: MutableList<GoalDatabase.Win> = mutableListOf()
+
+
         Log.d("HistoryFragment", "Loading list")
         loadWinsFromDatabase(database) { loadedWins ->
-            wins = loadedWins
+            Log.d("HistoryFragment", "Loaded list callback")
+            wins.addAll(0, loadedWins)
+            finished.value = true
         }
 
-        Log.d("HistoryFragment", "Loaded win list")
-        if (wins.isNotEmpty()) {
-            LazyColumn {
-                items(wins.size) { id ->
-                    MessageRow(wins[id])
-                }
-            }
-        } else {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(12.dp)
-                    .clip(RoundedCornerShape(12.dp)),
-                elevation = 10.dp,
-                backgroundColor = MaterialTheme.colors.surface
-            ) {
+        if (finished.value) {
+            Log.d("HistoryFragment", "Loaded win list")
 
-                Text(
-                    text = "No History!!",
+            if (wins.isNotEmpty()) {
+                LazyColumn {
+                    items(wins.size) { id ->
+                        MessageRow(wins[id])
+                    }
+                }
+            } else {
+                Card(
                     modifier = Modifier
-                        .padding(start = 24.dp, bottom = 24.dp, top = 24.dp)
-                        .offset(x = 190.dp)
-                )
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .padding(12.dp)
+                        .clip(RoundedCornerShape(12.dp)),
+                    elevation = 10.dp,
+                    backgroundColor = MaterialTheme.colors.surface
+                ) {
+
+                    Text(
+                        text = "No History!!",
+                        modifier = Modifier
+                            .padding(start = 24.dp, bottom = 24.dp, top = 24.dp)
+                            .offset(x = 190.dp)
+                    )
+                }
             }
         }
     }
-
 
 }
 
@@ -158,7 +166,7 @@ fun MessageRow(win: GoalDatabase.Win) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
+            .height(150.dp)
             .padding(12.dp)
             .clip(RoundedCornerShape(12.dp)),
         elevation = 10.dp,
@@ -170,14 +178,12 @@ fun MessageRow(win: GoalDatabase.Win) {
             text = "Won at: " + win.date,
             modifier = Modifier
                 .padding(start = 24.dp, bottom = 24.dp, top = 24.dp)
-                .offset(x = 190.dp)
         )
 
         Text(
-            text = "Won in: " + win.time,
+            text = "Won in: ${(round(((win.time - win.time%60)/60)))} min, ${((round(win.time * 10)) / 10)%60} sec",
             modifier = Modifier
                 .padding(start = 24.dp, bottom = 24.dp, top = 48.dp)
-                .offset(x = 190.dp)
         )
 
     }

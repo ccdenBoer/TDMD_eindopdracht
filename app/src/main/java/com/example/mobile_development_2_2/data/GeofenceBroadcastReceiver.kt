@@ -38,14 +38,11 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         if (geofenceList != null) {
             for (geofence in geofenceList) {
                 Log.d(TAG, "onReceive: " + geofence.requestId + " triggered ")
-                PopupHelper.SetState(true)
 
-                //val poi = RouteManager.getRouteManager(null).get_CurrentPoi()
-                //var description = poi.shortDescription
+
 
                 notificationHelper.sendHighPriorityNotification("notification", "test", MainActivity::class.java)
-/*              RouteManager.getRouteManager(null).triggeredGeofence()
-                RouteManager.getRouteManager(null).selectedRoute.totalPoisVisited.value++*/
+
                 GoalPointManager.getGoalPointManager(null).removeGeofence(geofence.requestId)
             }
         }

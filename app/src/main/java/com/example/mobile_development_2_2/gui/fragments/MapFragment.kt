@@ -161,10 +161,14 @@ class MapFragment : LocationListener {
                 ) {
                     Button(
                         onClick = {
+                            try{
+                                GoalPointManager.getGoalPointManager(null).start(myLocation)
+                                GoalTimer.start()
 
-                            GoalPointManager.getGoalPointManager(null).start(myLocation);
-                            //currentRoute.setPoints(GoalPointManager.getGoalPointManager().getGoalsAsGeoPoint() .toMutableList())
-                            GoalTimer.start()
+                            } catch (e:Exception){
+                                Log.d(LOG_TAG, "No gps data yet")
+                            }
+
                         },
                         modifier = Modifier
                             .padding(bottom = 20.dp),
@@ -225,7 +229,7 @@ class MapFragment : LocationListener {
 
                 ) {
                     Text(
-                        text = "${GoalPointManager.getGoalPointManager().goalsVisited.value} / ${GoalPointManager.getGoalPointManager().totalPoints()} " + Lang.get(
+                        text = "${GoalPointManager.getGoalPointManager(null).goalsVisited.value} / ${GoalPointManager.getGoalPointManager(null).totalPoints()} " + Lang.get(
                             R.string.map_points
                         ),
                         textAlign = TextAlign.Center,

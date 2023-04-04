@@ -59,9 +59,30 @@ fun loadWinsFromDatabase(db: GoalDatabase, callback: (MutableList<GoalDatabase.W
     Thread {
         var wins = db.userDao().getAll().toMutableList()
 
-        Log.d("dbRequest", "Finished request")
+        Log.d("dbRequest", "Finished getall request")
         Handler(Looper.getMainLooper()).post {
             callback(wins)
         }
+    }.start()
+}
+
+fun addWinsFromDatabase(db: GoalDatabase, win: GoalDatabase.Win) {
+    Thread {
+        db.userDao().insertAll(win)
+
+        Log.d("dbRequest", "Finished add request")
+
+    }.start()
+}
+
+fun getTotalWinsFromDatabase(db: GoalDatabase, callback: (Int) -> Unit) {
+    Thread {
+        var total = db.userDao().getTotalSize()
+
+        Log.d("dbRequest", "Finished getsize request")
+        Handler(Looper.getMainLooper()).post {
+            callback(total)
+        }
+
     }.start()
 }
