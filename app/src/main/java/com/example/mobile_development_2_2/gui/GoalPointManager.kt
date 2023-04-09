@@ -20,12 +20,11 @@ class GoalPointManager {
     var finished: MutableState<Boolean> = mutableStateOf(false)
     var started: MutableState<Boolean> = mutableStateOf(false)
     var goalsVisited: MutableState<Int> = mutableStateOf(0)
-    //private var goals: List<GoalPoint>? = null
-    private val geoPoints = mutableListOf<GeoPoint>()
-    private val goals = mutableListOf<GoalPoint>()
+    private var geoPoints = mutableListOf<GeoPoint>()
+    private var goals = mutableListOf<GoalPoint>()
     var context: Context?
     private val TAG = "GoalPointManager"
-    var amountOffGeofences = 6
+    var amountOffGeofences = 8
     private val totalPoints = 8
 
     private constructor(context: Context?) {
@@ -50,19 +49,18 @@ class GoalPointManager {
 
     fun stop() {
         removeAllGeofence()
-        geoPoints.clear()
-        goals.clear()
+        geoPoints = emptyList<GeoPoint>().toMutableList()
+        goals = emptyList<GoalPoint>().toMutableList()
         goalsVisited.value = 0
         started.value = false
 
     }
 
     fun getGoals(): MutableList<GoalPoint> {
-        if (!goals.isEmpty()) {
-            return goals
-        } else {
-            return testList()
+        if(goals.isEmpty()){
+            goals = emptyList<GoalPoint>().toMutableList()
         }
+        return goals
     }
 
     fun totalPointsVisited(): MutableState<Int> {
@@ -86,8 +84,8 @@ class GoalPointManager {
 
     private fun testList(): MutableList<GoalPoint> {
         var a = GoalPoint(GeoPoint(47, 6));
-        var b = GoalPoint(GeoPoint(50, 50));
-        var c = GoalPoint(GeoPoint(50, 50));
+        var b = GoalPoint(GeoPoint(50, 80));
+        var c = GoalPoint(GeoPoint(80, 50));
 
         return mutableListOf<GoalPoint>(a, b, c)
     }
@@ -171,7 +169,7 @@ class GoalPointManager {
                         gp.visited.value = true
                     }
                 }
-                goalsVisited.value++
+                totalPointsVisited()
                 if(goalsVisited.value >= totalPoints){
                     finished.value = true
                     var date = LocalDateTime.now().toString()

@@ -1,5 +1,6 @@
 package com.example.mobile_development_2_2.gui.fragments.settings
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,32 +14,34 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextDirection.Companion.Content
 import com.example.mobile_development_2_2.R
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import com.example.mobile_development_2_2.data.GoalDatabase
 import com.example.mobile_development_2_2.data.GoalTimer
-import com.example.mobile_development_2_2.data.Lang
 import com.example.mobile_development_2_2.data.loadWinsFromDatabase
 import kotlin.math.round
 
 var finished: MutableState<Boolean> = mutableStateOf(false)
 var wins: MutableList<GoalDatabase.Win> = mutableListOf()
+lateinit var context: Context
 
 @Composable
 fun SettingsFragment(modifier: Modifier, database: GoalDatabase) {
     finished.value = false
+    context = LocalContext.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = modifier.fillMaxSize()
     ) {
         Card(
-            modifier = Modifier.padding(bottom = 50.dp),
-            backgroundColor = MaterialTheme.colors.surface
+            modifier = Modifier.padding(top = 10.dp, bottom =  10.dp),
+            backgroundColor = MaterialTheme.colors.background
         ) {
-            Settings()
+            Copyright()
         }
         Card(
             backgroundColor = MaterialTheme.colors.surface,
@@ -46,70 +49,7 @@ fun SettingsFragment(modifier: Modifier, database: GoalDatabase) {
         ) {
             HistoryList(database = database)
         }
-        Card(
-            modifier = Modifier.padding(top = 50.dp),
-            backgroundColor = MaterialTheme.colors.surface
-        ) {
-            Copyright()
-        }
-    }
-}
 
-
-@Composable
-fun Settings() {
-    var expanded by remember { mutableStateOf(false) }
-
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = Lang.get(R.string.settings_language),
-                modifier = Modifier.padding(8.dp),
-            )
-            Row(
-                Modifier.clickable { expanded = !expanded },
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = Lang.language.first)
-                Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = null)
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                    properties = PopupProperties(focusable = false)
-                ) {
-                    Lang.languages.forEach { l ->
-                        DropdownMenuItem(onClick = {
-                            expanded = false
-                            Lang.setLang(l)
-                        }) {
-                            Text(text = l.first)
-                        }
-                    }
-                }
-            }
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = Lang.get(R.string.settings_colour_blind),
-                modifier = Modifier.padding(8.dp),
-            )
-            Switch(
-                checked = Lang.colorblind,
-                onCheckedChange = {
-                    Lang.setColor(it);
-                },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = MaterialTheme.colors.primary,
-                    uncheckedThumbColor = MaterialTheme.colors.primary,
-                    checkedTrackColor = MaterialTheme.colors.onPrimary,
-                    uncheckedTrackColor = MaterialTheme.colors.primary,
-                )
-            )
-        }
     }
 }
 
@@ -147,14 +87,13 @@ fun HistoryList(database: GoalDatabase) {
                         .padding(12.dp)
                         .clip(RoundedCornerShape(12.dp)),
                     elevation = 10.dp,
-                    backgroundColor = MaterialTheme.colors.surface
+                    backgroundColor = MaterialTheme.colors.background
                 ) {
 
                     Text(
                         text = "No History!!",
                         modifier = Modifier
                             .padding(start = 24.dp, bottom = 24.dp, top = 24.dp)
-                            .offset(x = 190.dp)
                     )
                 }
             }
@@ -195,7 +134,7 @@ fun MessageRow(win: GoalDatabase.Win) {
 @Composable
 fun Copyright() {
     Text(
-        text = Lang.get(R.string.settings_copyright),
+        text = context.resources.getString(R.string.settings_copyright),
         modifier = Modifier.padding(8.dp),
     )
 }

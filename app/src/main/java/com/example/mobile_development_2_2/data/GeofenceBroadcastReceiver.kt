@@ -18,7 +18,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "GeofenceBroadcastReceiver"
 
     override fun onReceive(context: Context, intent: Intent) {
-        var notificationHelper = NotificationHelper(context)
 
 
         Toast.makeText(context, "reached point", Toast.LENGTH_SHORT).show()
@@ -40,10 +39,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 Log.d(TAG, "onReceive: " + geofence.requestId + " triggered ")
 
                 GoalPointManager.getGoalPointManager(null).removeGeofence(geofence.requestId)
-
-                //notificationHelper.sendHighPriorityNotification("notification", "test", MainActivity::class.java)
-
-
             }
         }
     }

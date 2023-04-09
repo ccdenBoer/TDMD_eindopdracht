@@ -34,7 +34,6 @@ import androidx.core.graphics.drawable.toBitmap
 import com.example.mobile_development_2_2.R
 import com.example.mobile_development_2_2.data.GoalDatabase
 import com.example.mobile_development_2_2.data.GoalTimer
-import com.example.mobile_development_2_2.data.Lang
 import com.example.mobile_development_2_2.gui.GoalPoint
 import com.example.mobile_development_2_2.gui.GoalPointManager
 import com.example.mobile_development_2_2.ui.viewmodels.OSMViewModel
@@ -111,14 +110,14 @@ class MapFragment : LocationListener {
                 Column {
 
                     Text(
-                        text = Lang.get(R.string.map_no_location_permission),
+                        text = context.resources.getString(R.string.map_no_location_permission),
                         color = MaterialTheme.colors.error
                     )
                 }
             }
             Row {
                 Text(
-                    text = Lang.get(R.string.map_copyright),
+                    text = context.resources.getString(R.string.map_copyright),
                     fontSize = 8.sp,
                     modifier = Modifier
                         .background(MaterialTheme.colors.surface, RectangleShape)
@@ -136,7 +135,7 @@ class MapFragment : LocationListener {
                     )
                 ) {
                     Text(
-                        text = Lang.get(R.string.map_recenter),
+                        text = context.resources.getString(R.string.map_recenter),
                         color = MaterialTheme.colors.onPrimary
                     )
                 }
@@ -167,7 +166,7 @@ class MapFragment : LocationListener {
                         )
                     ) {
                         Text(
-                            text = Lang.get(R.string.map_start),
+                            text = context.resources.getString(R.string.map_start),
                             color = MaterialTheme.colors.onPrimary
                         )
 
@@ -218,7 +217,7 @@ class MapFragment : LocationListener {
 
                 ) {
                     Text(
-                        text = "${GoalPointManager.getGoalPointManager(null).goalsVisited.value} / ${GoalPointManager.getGoalPointManager(null).totalPoints()} " + Lang.get(
+                        text = "${GoalPointManager.getGoalPointManager(null).goalsVisited.value} / ${GoalPointManager.getGoalPointManager(null).totalPoints()} " + context.resources.getString(
                             R.string.map_points
                         ),
                         textAlign = TextAlign.Center,
@@ -303,19 +302,18 @@ class MapFragment : LocationListener {
                 mapView.apply {
                     setTileSource(TileSourceFactory.MAPNIK)
                     isTilesScaledToDpi = true
-                    controller.setCenter(GeoPoint(51.58703, 4.773187)) // Avans
+                    if(provider.lastKnownLocation == null){
+                        controller.setCenter(GeoPoint(51.58703, 4.773187)) // Avans
+                    } else{
+                        controller.setCenter(GeoPoint(provider.lastKnownLocation.latitude, provider.lastKnownLocation.longitude))
+                    }
+
                     controller.setZoom(17.0)
-
-
-                    mapView.overlays.add(unvisitedGoalOverlay)
+                    mapView.overlays.add(myLocation)
 
 
                     mapView.overlays.add(unvisitedGoalOverlay)
                     mapView.overlays.add(visitedGoalOverlay)
-
-                    mapView.overlays.add(myLocation)
-
-
                 }
             },
             modifier = modifier,
@@ -341,6 +339,29 @@ class MapFragment : LocationListener {
             )
             mapView.invalidate() // Ensures the map is updated on screen
         }
+        GoalPointManager.getGoalPointManager(null).getGoals().toMutableList().forEach(){
+            rememberUpdatedState(it.visited.value)
+        }
+        var forceRedraw by remember { mutableStateOf(false) }
+        locations.forEach { location ->
+            LaunchedEffect(location.visited.value) {
+                // Update the overlay for the current location
+                forceRedraw = !forceRedraw
+                visitedGoalOverlay.removeAllItems()
+                visitedGoalOverlay.addItems(
+                    locations.filter { it.visited.value }.map { GoalItem(it) }
+                )
+                unvisitedGoalOverlay.removeAllItems()
+                unvisitedGoalOverlay.addItems(
+                    locations.filter { !it.visited.value }
+                        .map { GoalItem(it) }
+                )
+                mapView.invalidate() // Ensures the map is updated on screen
+            }
+        }
+        rememberUpdatedState(forceRedraw)
+        
+
 
 
 
