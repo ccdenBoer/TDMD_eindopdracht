@@ -34,7 +34,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
+//import androidx.room.Room
 import com.example.mobile_development_2_2.R
 import com.example.mobile_development_2_2.data.GoalDatabase
 

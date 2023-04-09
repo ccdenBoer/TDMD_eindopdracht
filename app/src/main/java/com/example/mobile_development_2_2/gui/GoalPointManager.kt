@@ -120,6 +120,9 @@ class GoalPointManager {
 
         return goals
     }
+    fun setGoals(goals: List<GoalPoint>) {
+        this.goals = goals.toMutableList()
+    }
 
     fun addGeofenceLocation(lat: Double, lng: Double, id: String) {
         Log.d(LOG_TAG, "Setting geofence $lat $lng $id")
