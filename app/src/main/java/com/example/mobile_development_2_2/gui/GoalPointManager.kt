@@ -15,6 +15,7 @@ import com.google.android.gms.location.LocationServices
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import java.time.LocalDateTime
+import java.lang.ExceptionInInitializerError as ExceptionInInitializerError
 
 class GoalPointManager {
     var finished: MutableState<Boolean> = mutableStateOf(false)
@@ -41,10 +42,18 @@ class GoalPointManager {
     }
 
     fun start(location: MyLocationNewOverlay) {
+        try {
+            location.myLocation.latitude
+        } catch (e: Exception) {
+            throw throw IllegalArgumentException("Invalid location: location is null")
+        }
+
         amountOffGeofences = 8
         generateGoals(location)
         started.value = true
         finished.value = false
+
+
     }
 
     fun stop() {
@@ -57,7 +66,7 @@ class GoalPointManager {
     }
 
     fun getGoals(): MutableList<GoalPoint> {
-        if(goals.isEmpty()){
+        if (goals.isEmpty()) {
             goals = emptyList<GoalPoint>().toMutableList()
         }
         return goals
@@ -66,14 +75,14 @@ class GoalPointManager {
     fun totalPointsVisited(): MutableState<Int> {
         goalsVisited.value = 0
         goals.forEach { i ->
-            if(i.visited.value){
+            if (i.visited.value) {
                 goalsVisited.value++
             }
         }
         return goalsVisited
     }
 
-    fun totalPoints(): Int{
+    fun totalPoints(): Int {
         return totalPoints
     }
 
@@ -82,24 +91,64 @@ class GoalPointManager {
         return geoPoints
     }
 
-    private fun testList(): MutableList<GoalPoint> {
-        var a = GoalPoint(GeoPoint(47, 6));
-        var b = GoalPoint(GeoPoint(50, 80));
-        var c = GoalPoint(GeoPoint(80, 50));
-
-        return mutableListOf<GoalPoint>(a, b, c)
-    }
-
     fun generateGoals(location: MyLocationNewOverlay): MutableList<GoalPoint> {
-        Log.d("GEOPOINTMANAGER", "${location.myLocation.latitude} - ${location.myLocation.longitude}")
-        var g1 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 1000, location.myLocation.longitude + Math.random() / 1000), "1");
-        var g2 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 1000, location.myLocation.longitude + Math.random() / 1000), "2");
-        var g3 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 1000, location.myLocation.longitude - Math.random() / 1000), "3");
-        var g4 = GoalPoint(GeoPoint(location.myLocation.latitude + Math.random() / 1000, location.myLocation.longitude - Math.random() / 1000), "4");
-        var g5 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 1000, location.myLocation.longitude + Math.random() / 1000), "5");
-        var g6 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 1000, location.myLocation.longitude + Math.random() / 1000), "6");
-        var g7 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 1000, location.myLocation.longitude - Math.random() / 1000), "7");
-        var g8 = GoalPoint(GeoPoint(location.myLocation.latitude - Math.random() / 1000, location.myLocation.longitude - Math.random() / 1000), "8");
+        try {
+            location.myLocation.latitude
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Invalid location: location is null")
+        }
+        Log.d(
+            TAG,
+            "${location.myLocation.latitude} - ${location.myLocation.longitude}"
+        )
+        var g1 = GoalPoint(
+            GeoPoint(
+                location.myLocation.latitude + Math.random() / 1000,
+                location.myLocation.longitude + Math.random() / 1000
+            ), "1"
+        );
+        var g2 = GoalPoint(
+            GeoPoint(
+                location.myLocation.latitude + Math.random() / 1000,
+                location.myLocation.longitude + Math.random() / 1000
+            ), "2"
+        );
+        var g3 = GoalPoint(
+            GeoPoint(
+                location.myLocation.latitude + Math.random() / 1000,
+                location.myLocation.longitude - Math.random() / 1000
+            ), "3"
+        );
+        var g4 = GoalPoint(
+            GeoPoint(
+                location.myLocation.latitude + Math.random() / 1000,
+                location.myLocation.longitude - Math.random() / 1000
+            ), "4"
+        );
+        var g5 = GoalPoint(
+            GeoPoint(
+                location.myLocation.latitude - Math.random() / 1000,
+                location.myLocation.longitude + Math.random() / 1000
+            ), "5"
+        );
+        var g6 = GoalPoint(
+            GeoPoint(
+                location.myLocation.latitude - Math.random() / 1000,
+                location.myLocation.longitude + Math.random() / 1000
+            ), "6"
+        );
+        var g7 = GoalPoint(
+            GeoPoint(
+                location.myLocation.latitude - Math.random() / 1000,
+                location.myLocation.longitude - Math.random() / 1000
+            ), "7"
+        );
+        var g8 = GoalPoint(
+            GeoPoint(
+                location.myLocation.latitude - Math.random() / 1000,
+                location.myLocation.longitude - Math.random() / 1000
+            ), "8"
+        );
         goals.add(g1)
         goals.add(g2)
         goals.add(g3)
@@ -111,7 +160,7 @@ class GoalPointManager {
 
         goals.forEach { i ->
             geoPoints.add(i.location)
-            Thread{
+            Thread {
                 addGeofenceLocation(i.location.latitude, i.location.longitude, i.name)
             }.start()
 
@@ -119,9 +168,8 @@ class GoalPointManager {
 
 
         return goals
-    }
-    fun setGoals(goals: List<GoalPoint>) {
-        this.goals = goals.toMutableList()
+
+
     }
 
     fun addGeofenceLocation(lat: Double, lng: Double, id: String) {
@@ -155,7 +203,8 @@ class GoalPointManager {
 
     fun removeAllGeofence() {
         Log.d(TAG, "removed all geofences")
-        geofenceHelper?.getPendingIntent()?.let { geofencingClient?.removeGeofences(it)  }
+        amountOffGeofences = 0
+        geofenceHelper?.getPendingIntent()?.let { geofencingClient?.removeGeofences(it) }
     }
 
     fun removeGeofence(id: String) {
@@ -165,21 +214,24 @@ class GoalPointManager {
             addOnSuccessListener {
                 Log.d(TAG, "Geofence with ID $id removed successfully.")
                 Log.d(TAG, "$amountOffGeofences amount of active geofences left")
-                goals.forEach(){gp ->
+                goals.forEach() { gp ->
                     //Log.d(TAG, "comparing ${gp.name} and ${id}")
-                    if(gp.name.equals(id)){
+                    if (gp.name.equals(id)) {
                         Log.d(TAG, "visited $gp.name")
                         gp.visited.value = true
                     }
                 }
                 totalPointsVisited()
-                if(goalsVisited.value >= totalPoints){
+                if (goalsVisited.value >= totalPoints) {
                     finished.value = true
                     var date = LocalDateTime.now().toString()
                     Log.d(TAG, "Adding win")
-                    getTotalWinsFromDatabase(GoalDatabase.getInstance(context!!)){
-                        Log.d(TAG, "Adding win for real id: ${it+1}")
-                        addWinsFromDatabase(GoalDatabase.getInstance(context!!), GoalDatabase.Win(it+1, date, GoalTimer.secondsPassed.value))
+                    getTotalWinsFromDatabase(GoalDatabase.getInstance(context!!)) {
+                        Log.d(TAG, "Adding win for real id: ${it + 1}")
+                        addWinsFromDatabase(
+                            GoalDatabase.getInstance(context!!),
+                            GoalDatabase.Win(it + 1, date, GoalTimer.secondsPassed.value)
+                        )
                     }
 
                 }
@@ -196,7 +248,11 @@ class GoalPointManager {
         private var goalPointManager: GoalPointManager? = null
 
         fun getGoalPointManager(context: Context?): GoalPointManager {
-            if (goalPointManager == null) {
+            if (goalPointManager == null && context == null) {
+                throw IllegalStateException("Context must be provided when goalPointManager is null")
+            }
+
+            if (goalPointManager == null && context != null) {
                 Log.d("RouteManager", "making goalpointmanager")
                 geofenceHelper = GeofenceHelper(context)
                 geofencingClient = context?.let { LocationServices.getGeofencingClient(it) }
