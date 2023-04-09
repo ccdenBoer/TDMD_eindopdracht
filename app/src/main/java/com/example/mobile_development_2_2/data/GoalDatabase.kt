@@ -16,13 +16,21 @@ abstract class GoalDatabase : RoomDatabase() {
     companion object {
         private var instance: GoalDatabase? = null
 
-        fun getInstance(context: Context): GoalDatabase {
+        fun getInstance(context: Context, forTesting: Boolean = false): GoalDatabase {
             return instance ?: synchronized(this) {
-                Room.databaseBuilder(
-                    context.applicationContext,
-                    GoalDatabase::class.java,
-                    "goal_database"
-                ).build().also { instance = it }
+                val builder = if (forTesting) {
+                    Room.inMemoryDatabaseBuilder(
+                        context.applicationContext,
+                        GoalDatabase::class.java
+                    )
+                } else {
+                    Room.databaseBuilder(
+                        context.applicationContext,
+                        GoalDatabase::class.java,
+                        "goal_database"
+                    )
+                }
+                builder.build().also { instance = it }
             }
         }
     }
@@ -50,6 +58,9 @@ abstract class GoalDatabase : RoomDatabase() {
 
         @Query("SELECT COUNT(*) FROM Win")
         fun getTotalSize(): Int
+
+        @Query("DELETE FROM Win")
+        fun deleteAll()
     }
 
 
@@ -66,11 +77,17 @@ fun loadWinsFromDatabase(db: GoalDatabase, callback: (MutableList<GoalDatabase.W
     }.start()
 }
 
-fun addWinsFromDatabase(db: GoalDatabase, win: GoalDatabase.Win) {
+fun addWinsFromDatabase(db: GoalDatabase, win: GoalDatabase.Win, callback: (() -> Unit)? = null) {
     Thread {
-        db.userDao().insertAll(win)
+        if(win.id > -1 && win.time > 0){
+            db.userDao().insertAll(win)
+        }
+
 
         Log.d("dbRequest", "Finished add request")
+        if(callback != null){
+            callback()
+        }
 
     }.start()
 }
@@ -84,5 +101,16 @@ fun getTotalWinsFromDatabase(db: GoalDatabase, callback: (Int) -> Unit) {
             callback(total)
         }
 
+    }.start()
+}
+
+fun clearDatabase(db: GoalDatabase, callback: () -> Unit){
+    Thread {
+        db.userDao().deleteAll()
+
+        Log.d("dbRequest", "Finished clear all request")
+        Handler(Looper.getMainLooper()).post {
+            callback()
+        }
     }.start()
 }

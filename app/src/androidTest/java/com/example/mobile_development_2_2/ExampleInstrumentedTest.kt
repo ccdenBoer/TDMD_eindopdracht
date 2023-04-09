@@ -8,9 +8,7 @@ import android.util.Log
 import androidx.compose.ui.text.font.emptyCacheFontFamilyResolver
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.mobile_development_2_2.data.GeofenceBroadcastReceiver
-import com.example.mobile_development_2_2.data.GeofenceHelper
-import com.example.mobile_development_2_2.data.GoalTimer
+import com.example.mobile_development_2_2.data.*
 import com.example.mobile_development_2_2.gui.GoalPoint
 import com.example.mobile_development_2_2.gui.GoalPointManager
 import com.google.android.gms.location.Geofence
@@ -193,6 +191,109 @@ class ExampleInstrumentedTest {
         }
         assertEquals(null, exception.message)
     }
+
+    @Test
+    fun happy_testDatabase(){
+        val db = GoalDatabase.getInstance(context, true)
+        var finished = false
+        loadWinsFromDatabase(db){
+            assert(it.size == 0) {"${it.size}"}
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+        finished = false
+        getTotalWinsFromDatabase(db){
+            assert(it == 0)
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+        finished = false
+        val win = GoalDatabase.Win(0, "date", 15.4)
+        addWinsFromDatabase(db, win){
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+        finished = false
+        getTotalWinsFromDatabase(db){
+            assert(it == 1)
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+        finished = false
+        loadWinsFromDatabase(db){
+            assert(it.isNotEmpty())
+            assert(it[0].date == "date")
+            assert(it[0].id == 0)
+            assert(it[0].time == 15.4)
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+        finished = false
+        clearDatabase(db){
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+        finished = false
+        loadWinsFromDatabase(db){
+            assert(it.isEmpty())
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+        finished = false
+        getTotalWinsFromDatabase(db){
+            assert(it == 0)
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+
+    }
+
+    @Test
+    fun unhappy_testDatabase(){
+        val db = GoalDatabase.getInstance(context, true)
+        var finished = false
+        val invalidWin = GoalDatabase.Win(-1, "don matter", -1.0)
+        addWinsFromDatabase(db, invalidWin){
+            finished = true
+        }
+
+        while(!finished){
+            sleep(100)
+        }
+        finished = false
+        getTotalWinsFromDatabase(db){
+            assert(it == 0)
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+
+        finished = false
+        clearDatabase(db){
+            finished = true
+        }
+        while(!finished){
+            sleep(100)
+        }
+    }
+
 
 
 }
