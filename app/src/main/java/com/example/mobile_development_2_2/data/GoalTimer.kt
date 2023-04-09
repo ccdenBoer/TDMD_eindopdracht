@@ -10,10 +10,10 @@ class GoalTimer {
     companion object{
         var started: MutableState<Boolean> = mutableStateOf(false)
         var secondsPassed: MutableState<Double> = mutableStateOf(0.0)
+        var myTimer = Timer()
 
-        val timerThread = Thread(Runnable {
+        var timerThread = Thread(Runnable {
             secondsPassed.value = 0.0
-            val myTimer = Timer()
             myTimer.scheduleAtFixedRate(object : TimerTask() {
                 override fun run() {
                     if(!GoalPointManager.getGoalPointManager(null).hasFinished()){
@@ -29,6 +29,20 @@ class GoalTimer {
         fun start(){
             secondsPassed.value = 0.0
             if(!started.value){
+                myTimer = Timer()
+                timerThread = Thread(Runnable {
+                    secondsPassed.value = 0.0
+                    myTimer.scheduleAtFixedRate(object : TimerTask() {
+                        override fun run() {
+                            if(!GoalPointManager.getGoalPointManager(null).hasFinished()){
+                                secondsPassed.value += 0.1
+                            }
+
+
+                        }
+                    }, 100, 100)
+
+                })
                 timerThread.start()
                 started.value = true
             }
