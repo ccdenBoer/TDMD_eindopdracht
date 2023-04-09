@@ -26,6 +26,7 @@ class GoalPointManager {
     private val TAG = "GoalPointManager"
     var amountOffGeofences = 8
     private val totalPoints = 8
+    val activeGeofences = mutableListOf<String>()
 
     private constructor(context: Context?) {
         Log.d(LOG_TAG, "constructor")
@@ -55,7 +56,9 @@ class GoalPointManager {
         started.value = false
 
     }
-
+    fun getGeofences(): MutableList<String> {
+        return activeGeofences
+    }
     fun getGoals(): MutableList<GoalPoint> {
         if(goals.isEmpty()){
             goals = emptyList<GoalPoint>().toMutableList()
@@ -120,9 +123,6 @@ class GoalPointManager {
 
         return goals
     }
-    fun setGoals(goals: List<GoalPoint>) {
-        this.goals = goals.toMutableList()
-    }
 
     fun addGeofenceLocation(lat: Double, lng: Double, id: String) {
         Log.d(LOG_TAG, "Setting geofence $lat $lng $id")
@@ -142,6 +142,7 @@ class GoalPointManager {
                             LOG_TAG,
                             "Geofence added " + geofencingRequest.geofences[0].latitude + " " + geofencingRequest.geofences[0].longitude
                         )
+                        activeGeofences.add(id)
                     }
                     ?.addOnFailureListener { e ->
                         Log.d(
@@ -156,6 +157,7 @@ class GoalPointManager {
     fun removeAllGeofence() {
         Log.d(TAG, "removed all geofences")
         geofenceHelper?.getPendingIntent()?.let { geofencingClient?.removeGeofences(it)  }
+        activeGeofences.clear()
     }
 
     fun removeGeofence(id: String) {
@@ -163,6 +165,7 @@ class GoalPointManager {
         val geofenceIdsToRemove = mutableListOf(id)
         geofencingClient?.removeGeofences(geofenceIdsToRemove)?.run {
             addOnSuccessListener {
+                activeGeofences.remove(id)
                 Log.d(TAG, "Geofence with ID $id removed successfully.")
                 Log.d(TAG, "$amountOffGeofences amount of active geofences left")
                 goals.forEach(){gp ->
@@ -202,7 +205,6 @@ class GoalPointManager {
                 geofencingClient = context?.let { LocationServices.getGeofencingClient(it) }
                 goalPointManager = GoalPointManager(context)
             }
-
             return goalPointManager as GoalPointManager
         }
     }

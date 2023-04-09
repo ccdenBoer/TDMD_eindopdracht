@@ -30,10 +30,14 @@ import org.osmdroid.util.GeoPoint
 class ExampleInstrumentedTest {
     private lateinit var geofenceHelper: GeofenceHelper
     private lateinit var context: Context
+    private lateinit var geofencingClient : GeofencingClient
+
     @Before
     fun setUp() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
         geofenceHelper = GeofenceHelper(context)
+        GoalPointManager.getGoalPointManager(context)
+        geofencingClient = LocationServices.getGeofencingClient(context)
     }
     @Test
     fun useAppContext() {
@@ -90,6 +94,67 @@ class ExampleInstrumentedTest {
         //assert(GoalTimer.started.value) {"${GoalTimer.started.value} : true"}
         Thread.sleep(1000)
         assert(GoalTimer.getSecondPassed().value > 0.9 && GoalTimer.getSecondPassed().value < 1.1){"${GoalTimer.getSecondPassed().value} : 1"}
+    }
+
+    @Test
+    fun happy_addRemoveGeofence() {
+        GoalPointManager.getGoalPointManager(null).addGeofenceLocation(0.0, 0.0, "test")
+        GoalPointManager.getGoalPointManager(null).addGeofenceLocation(1.0, 1.0, "test2")
+        GoalPointManager.getGoalPointManager(null).addGeofenceLocation(2.0, 2.0, "test3")
+
+        Thread.sleep(3000)
+        assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 3) {
+            "${
+                GoalPointManager.getGoalPointManager(
+                    null
+                ).activeGeofences.size
+            } : 3"
+        }
+        GoalPointManager.getGoalPointManager(null).removeGeofence("test")
+        Thread.sleep(1000)
+
+        assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 2) {
+            "${
+                GoalPointManager.getGoalPointManager(
+                    null
+                ).activeGeofences.size
+            } : 2"
+        }
+
+        GoalPointManager.getGoalPointManager(null).removeAllGeofence()
+        Thread.sleep(1000)
+        assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 0) {
+            "${
+                GoalPointManager.getGoalPointManager(
+                    null
+                ).activeGeofences.size
+            } : 0"
+        }
+    }
+
+    fun unhappy_addRemoveGeofence() {
+        GoalPointManager.getGoalPointManager(null).addGeofenceLocation(0.0, 0.0, "test")
+        GoalPointManager.getGoalPointManager(null).addGeofenceLocation(0.0, 0.0, "test")
+        Thread.sleep(3000)
+
+        assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 1) {
+            "${
+                GoalPointManager.getGoalPointManager(
+                    null
+                ).activeGeofences.size
+            } : 1"
+        }
+
+        GoalPointManager.getGoalPointManager(null).removeGeofence("")
+        Thread.sleep(1000)
+
+        assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 1) {
+            "${
+                GoalPointManager.getGoalPointManager(
+                    null
+                ).activeGeofences.size
+            } : 1"
+        }
     }
 
 
