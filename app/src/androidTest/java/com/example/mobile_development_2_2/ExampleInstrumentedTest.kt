@@ -102,58 +102,58 @@ class ExampleInstrumentedTest {
         GoalPointManager.getGoalPointManager(null).addGeofenceLocation(1.0, 1.0, "test2")
         GoalPointManager.getGoalPointManager(null).addGeofenceLocation(2.0, 2.0, "test3")
 
-        Thread.sleep(3000)
-        assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 3) {
-            "${
-                GoalPointManager.getGoalPointManager(
-                    null
-                ).activeGeofences.size
-            } : 3"
+        Thread.sleep(300)
+        val activeGeofences = GoalPointManager.getGoalPointManager(null).activeGeofences
+        assert(activeGeofences.size == 3) {
+            "Expected 3 geofences, but got ${activeGeofences.size}"
         }
-        GoalPointManager.getGoalPointManager(null).removeGeofence("test")
-        Thread.sleep(1000)
+        assert(activeGeofences.map { it }.containsAll(listOf("test", "test2", "test3"))) {
+            "Expected geofences with IDs 'test', 'test2', and 'test3', but got ${activeGeofences.map { it }}"
+        }
 
-        assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 2) {
-            "${
-                GoalPointManager.getGoalPointManager(
-                    null
-                ).activeGeofences.size
-            } : 2"
+        GoalPointManager.getGoalPointManager(null).removeGeofence("test")
+        Thread.sleep(100)
+
+        val activeGeofencesAfterRemoval = GoalPointManager.getGoalPointManager(null).activeGeofences
+        assert(activeGeofencesAfterRemoval.size == 2) {
+            "Expected 2 geofences, but got ${activeGeofencesAfterRemoval.size}"
+        }
+        assert(activeGeofencesAfterRemoval.map { it }.containsAll(listOf("test2", "test3"))) {
+            "Expected geofences with IDs 'test2' and 'test3', but got ${activeGeofencesAfterRemoval.map { it }}"
         }
 
         GoalPointManager.getGoalPointManager(null).removeAllGeofence()
-        Thread.sleep(1000)
-        assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 0) {
-            "${
-                GoalPointManager.getGoalPointManager(
-                    null
-                ).activeGeofences.size
-            } : 0"
+        Thread.sleep(100)
+        assert(GoalPointManager.getGoalPointManager(null).activeGeofences.isEmpty()) {
+            "Expected no geofences, but got ${GoalPointManager.getGoalPointManager(null).activeGeofences.size}"
         }
     }
 
+    @Test
     fun unhappy_addRemoveGeofence() {
         GoalPointManager.getGoalPointManager(null).addGeofenceLocation(0.0, 0.0, "test")
         GoalPointManager.getGoalPointManager(null).addGeofenceLocation(0.0, 0.0, "test")
-        Thread.sleep(3000)
+        Thread.sleep(300)
 
         assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 1) {
-            "${
-                GoalPointManager.getGoalPointManager(
-                    null
-                ).activeGeofences.size
-            } : 1"
+            "${GoalPointManager.getGoalPointManager(null).activeGeofences.size} : 1"
+        }
+
+        val activeGeofenceIds = GoalPointManager.getGoalPointManager(null).activeGeofences.map { it }
+        assert(activeGeofenceIds == listOf("test")) {
+            "$activeGeofenceIds : [test]"
         }
 
         GoalPointManager.getGoalPointManager(null).removeGeofence("")
-        Thread.sleep(1000)
+        Thread.sleep(100)
 
         assert(GoalPointManager.getGoalPointManager(null).activeGeofences.size == 1) {
-            "${
-                GoalPointManager.getGoalPointManager(
-                    null
-                ).activeGeofences.size
-            } : 1"
+            "${GoalPointManager.getGoalPointManager(null).activeGeofences.size} : 1"
+        }
+
+        val activeGeofenceIdsAfterRemove = GoalPointManager.getGoalPointManager(null).activeGeofences.map { it }
+        assert(activeGeofenceIdsAfterRemove == listOf("test")) {
+            "$activeGeofenceIdsAfterRemove : [test]"
         }
     }
 

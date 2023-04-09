@@ -142,6 +142,8 @@ class GoalPointManager {
                             LOG_TAG,
                             "Geofence added " + geofencingRequest.geofences[0].latitude + " " + geofencingRequest.geofences[0].longitude
                         )
+                        if(activeGeofences.contains(id))
+                            activeGeofences.remove(id)
                         activeGeofences.add(id)
                     }
                     ?.addOnFailureListener { e ->
