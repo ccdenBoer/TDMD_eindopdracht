@@ -6,8 +6,6 @@ import android.content.ContextWrapper
 import android.location.Location
 import android.location.LocationProvider
 import androidx.compose.runtime.remember
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mobile_development_2_2.data.GeofenceBroadcastReceiver
 import com.example.mobile_development_2_2.data.GeofenceHelper
 import com.example.mobile_development_2_2.data.GoalTimer
@@ -21,9 +19,6 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 

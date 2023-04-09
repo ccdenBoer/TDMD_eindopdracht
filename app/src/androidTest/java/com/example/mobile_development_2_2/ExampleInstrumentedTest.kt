@@ -72,41 +72,13 @@ class ExampleInstrumentedTest {
         assertEquals(Geofence.NEVER_EXPIRE, geofence?.expirationTime)
     }
 
-//    @Test
-//    fun testGetPendingIntent() {
-//        val pendingIntent = geofenceHelper.getPendingIntent()
-//        assertEquals(GeofenceBroadcastReceiver::class.java, pendingIntent?.creatorPackage)
-//    }
-
     @Test
     fun happy_timer() {
         GoalTimer.start()
-        Thread.sleep(1000)
-        assert(GoalTimer.secondsPassed.value > 500.0 && GoalTimer.secondsPassed.value < 1500.0)
+        Thread.sleep(3000)
+        assert(GoalTimer.getSecondPassed().value > 2.9 && GoalTimer.getSecondPassed().value < 3.1){"${GoalTimer.getSecondPassed().value} : 3"}
     }
-//    @Test
-//    fun happy_goals() {
-//        GoalPointManager.getGoalPointManager(null).setGoals(
-//            listOf(
-//                GoalPoint(GeoPoint(37.7749, -122.4194)),
-//                GoalPoint(GeoPoint(40.7128, -74.0060)),
-//                GoalPoint(GeoPoint(51.5074, -0.1278))
-//            )
-//        )
-//        assert(GoalPointManager.getGoalPointManager(null).getGoals().size == 3)
-//    }
-//    @Test
-//    fun generateGoals() {
-//        mockLocation.myLocation.setCoords(51.806917655901294, 5.577502200540777)
-//        GoalPointManager.getGoalPointManager(null).generateGoals(mockLocation)
-//        //check if all goals are generated within ~1km of the current location
-//        for(goal in GoalPointManager.getGoalPointManager(null).getGoals())  {
-//            assert((mockLocation.myLocation.latitude > goal.location.latitude -0.01 ||
-//                    mockLocation.myLocation.latitude < goal.location.latitude +0.01) &&
-//                    (mockLocation.myLocation.longitude > goal.location.longitude -0.01 ||
-//                    mockLocation.myLocation.longitude < goal.location.longitude +0.01))
-//
-//        }
-//    }
+
+
 
 }

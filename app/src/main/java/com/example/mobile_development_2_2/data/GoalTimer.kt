@@ -33,10 +33,6 @@ class GoalTimer {
                 started.value = true
             }
         }
-
-        fun stop(){
-
-        }
         fun getSecondPassed() : MutableState<Double> {
             return secondsPassed
         }

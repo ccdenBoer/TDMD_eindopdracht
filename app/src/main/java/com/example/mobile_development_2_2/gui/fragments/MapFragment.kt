@@ -184,7 +184,6 @@ class MapFragment : LocationListener {
                 Button(
                     onClick = {
                         GoalPointManager.getGoalPointManager(null).stop();
-                        GoalTimer.stop()
                     },
                     modifier = Modifier
                         .padding(top = 20.dp, start = 30.dp),
