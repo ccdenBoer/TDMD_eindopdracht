@@ -74,10 +74,26 @@ class ExampleInstrumentedTest {
 
     @Test
     fun happy_timer() {
+        assert(!GoalTimer.started.value) {"${GoalTimer.started.value} : false"}
         GoalTimer.start()
         Thread.sleep(3000)
+        assert(GoalTimer.started.value)
         assert(GoalTimer.getSecondPassed().value > 2.9 && GoalTimer.getSecondPassed().value < 3.1){"${GoalTimer.getSecondPassed().value} : 3"}
+        assert(GoalTimer.started.value) {"${GoalTimer.started.value} : true"}
     }
+
+    @Test
+    fun unhappy_timer() {
+        GoalTimer.start()
+        Thread.sleep(2000)
+        GoalTimer.start()
+        //assert(GoalTimer.started.value) {"${GoalTimer.started.value} : true"}
+        Thread.sleep(1000)
+        assert(GoalTimer.getSecondPassed().value > 0.9 && GoalTimer.getSecondPassed().value < 1.1){"${GoalTimer.getSecondPassed().value} : 1"}
+    }
+
+
+
 
 
 
