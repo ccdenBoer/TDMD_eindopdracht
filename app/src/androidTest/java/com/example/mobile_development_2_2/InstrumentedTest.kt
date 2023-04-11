@@ -4,10 +4,12 @@ import android.content.Context
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mobile_development_2_2.data.*
 import com.example.mobile_development_2_2.gui.GoalPointManager
+import com.example.mobile_development_2_2.gui.MainActivity
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
@@ -38,12 +40,15 @@ class InstrumentedTest {
     private lateinit var mapView: MapView
     private lateinit var myLocationNewOverlay: MyLocationNewOverlay
     private lateinit var location: Location
+    private lateinit var notificationHelper: NotificationHelper
 
     @Before
     fun before() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
         geofenceHelper = GeofenceHelper(context)
         geofencingClient = LocationServices.getGeofencingClient(context)
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        notificationHelper = NotificationHelper(context)
         val handler = Handler(Looper.getMainLooper())
         var finished = false
         handler.post(){
@@ -379,6 +384,22 @@ class InstrumentedTest {
         }
     }
 
+    @Test
+    fun happy_notification() {
+        val title = "Test notification"
+        val body = "This is a test notification"
+        val activityName = MainActivity::class.java
+        notificationHelper.sendHighPriorityNotification(title, body, activityName)
+        // The notification should be displayed without any exceptions
+    }
 
+    @Test
+    fun unhappy_notification() {
+        val title: String? = null
+        val body: String? = null
+        val activityName = MainActivity::class.java
+        notificationHelper.sendHighPriorityNotification(title, body, activityName)
+        // The notification should be displayed without any exceptions
+    }
 
 }
